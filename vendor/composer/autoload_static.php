@@ -18,6 +18,10 @@ class ComposerStaticInit7e87c541bb4020822a1b738dcec0ba75
         array (
             'Psr\\Http\\Message\\' => 17,
         ),
+        'K' => 
+        array (
+            'Krugozor\\Database\\' => 18,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -30,6 +34,10 @@ class ComposerStaticInit7e87c541bb4020822a1b738dcec0ba75
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Krugozor\\Database\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/krugozor/database/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
