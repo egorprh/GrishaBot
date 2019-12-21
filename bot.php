@@ -23,7 +23,7 @@
  * Каналы для конкурса хранятся в отдельной таблице?
  *
  *  Для каждого конкурса новая таблица.
- *  Поля таблицы: id, username, chatid, referer, referertoken, selftoken, date, countreferal, countsubscribes, сообщили ли ему
+ *  Поля таблицы: id, username, chatid, referer, referertoken, selftoken, date, countreferal, countsubscribes, conditionscomplete
  *
  * TODO:
  * 1) Создать таблицу
@@ -49,16 +49,25 @@ $tablename = 'usersdata';
 $text = $message["message"]["text"]; //Текст сообщения
 $chat_id = $message["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
 $name = $message["message"]["from"]["username"]; //Юзернейм пользователя
+$userid = $message["message"]["from"]["id"]; //ИД пользователя
 $date = $message["message"]["date"];
 
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
+$iamready = in_array('/icompleted', $textarr);
 
 if ($isstart) {
     switch (count($textarr)) {
         case 2:
             $referertoken = $textarr[1];
-            $referer = 'neadmin';
+            $referer = "SELECT * FROM userdata WHERE selftoken = $referertoken";
+            $referallmessage = "По вашей ссылке пришел пользователь" . $name;
+            $countsubscribes = $referer->countsubscribes + 1;
+            //"UPDATE userdata SET countsubscribes = $countsubscribes WHERE id = $referer->id"
+            $telegramApi->sendMessage($referer->chatid, $referallmessage);
+            if ($countsubscribes == 3 && $referer->countsubscribes >= 3 && !$referer->conditionscomplete) {
+                $telegramApi->sendMessage($referer->chatid, 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
+            }
             break;
         case 1:
             $referertoken = 0;
@@ -69,10 +78,14 @@ if ($isstart) {
     $usertoken = substr(md5(microtime()), rand(0, 26), 9);
     $params = [
         'username' => $name,
+        'chatid' => $chat_id,
         'referertoken' => $referertoken,
-        'referer' => $referer,
+        'refererid' => $referer->id,
         'selftoken' => $usertoken,
-        'date' => time()
+        'date' => time(),
+        'countreferal' => 0,
+        'countsubscribes' => 0,
+        'conditionscomplete' => false
     ];
     $result = $dbManager->insert_record($tablename, $params);
 
@@ -83,7 +96,31 @@ if ($isstart) {
     $welcomemessage = "Привет! Подпишись на этот канал и пригласи 3 друзей по этой ссылке:" . $referallurl . ", тогда ты сможешь учавствовать в розыграше!";
 
     $telegramApi->sendMessage($chat_id, $welcomemessage);
-} else {
+}
+elseif ($iamready) {
+    $ourchannels = []; //тут указаны chat_id каналов на которые нужно подписаться
+    $notsubscribes = [];
+    $userdata = "SELECT * FROM userdata WHERE chatid = $chat_id";
+    $countsubscribes = $userdata->countsubscribes;
+    foreach ($ourchannels as $ourchannel) {
+        if (getChatMember($ourchannel, $userid)) {
+            $countsubscribes++;
+        } else {
+            $notsubscribes[] = $ourchannel;
+        }
+    }
+
+    if ($countsubscribes == count($ourchannels)) {
+        $telegramApi->sendMessage($chat_id, 'Красава! Ты подписался на все каналы!');
+        if ($userdata->countreferal >= 3 && !$userdata->conditionscomplete) {
+            $telegramApi->sendMessage($chat_id, 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
+        }
+    } else {
+        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё подпишись на каналы:' . $notsubscribes);
+    }
+    //"UPDATE userdata SET countsubscribes = $countsubscribes WHERE id = $userdata->id"
+}
+else {
     $randommessages = [
         'Ничто не дается так дешево как хочется',
         'Господи, сколько уже не сделано, а сколько еще предстоит не сделать!',
