@@ -1,36 +1,11 @@
 <?php
 
-/* Алгоритм
- * 1) Пользователь переходит по реферальной ссылке
- * 2) Смотри от кого он пришел и записываем данные в базу
- * 3) Показываем сообщение в котором канала на которые надо подписаться и сформированная для него ссылка с реферальным кодом
- * 4) Рефереру сообщаем что подписался по его ссылке реферал и записываем количество в базу число рефералов
- *
- * 1) Пользователь подписывается на каналы
- * 2) Идет к нам и говорит "Я подписался"
- * 3) Проверяем так ли это
- * 4) Если да - то записываем в базу что он выполнил подписки
- * 5) Если нет - то показываем каналы на которые он не подписался
- *
- * Когда пользователь выполняет все результаты отправляем ему сообщение что он молодец.
- * Проверяем это, когда пользователь делает все подписки, и когда приглашает нужное количество пользователей
- *
- * Проверка результатов:
- * 1) Делаем запрос в базу чтобы выбрало тех, кто выполнил условия конкурса
- * 2) Собираем их аёдишники
- * 3) Рандомным алгоритмом выбираем победителей
- *
- * Каналы для конкурса хранятся в отдельной таблице?
- *
- *  Для каждого конкурса новая таблица.
- *  Поля таблицы: id, username, chatid, referer, referertoken, selftoken, date, countreferal, countsubscribes, conditionscomplete
- *
+/*
  * TODO:
  * 1) Создать таблицу
  * 2) Написать алгоритм при приветствии
  * 3) Написать алгоритм проверки подписок
- *
- *
+ * 4) Написать алгоритм запуска конкурса
  * */
 
 echo 'This is Bot page.';
@@ -38,35 +13,41 @@ echo 'This is Bot page.';
 
 include('vendor/autoload.php'); //Подключаем библиотеку
 include('classes/TelegramBot.php');
-include('classes/dbmanage.php');
 
-$dbManager = new dbmanage();
+// Алиас для краткости
+use Krugozor\Database\Mysql\Mysql as Mysql;
+
+// Соединение с СУБД и получение объекта-"обертки" над "родным" mysqli
+$db = Mysql::create("localhost", "g995994o_konkurs", "kS2qiPsj")
+    // Выбор базы данных
+    ->setDatabaseName("g995994o_konkurs")
+    // Выбор кодировки
+    ->setCharset("utf8");
+
 $telegramApi = new TelegramBot();
-
 $message = $telegramApi->getMessage();
-$tablename = 'usersdata';
 
 $text = $message["message"]["text"]; //Текст сообщения
 $chat_id = $message["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
 $name = $message["message"]["from"]["username"]; //Юзернейм пользователя
-$userid = $message["message"]["from"]["id"]; //ИД пользователя
 $date = $message["message"]["date"];
 
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
-$iamready = in_array('/icompleted', $textarr);
+$iamsubcribe = in_array('Я подписался', $textarr);
 
 if ($isstart) {
     switch (count($textarr)) {
         case 2:
             $referertoken = $textarr[1];
-            $referer = "SELECT * FROM userdata WHERE selftoken = $referertoken";
+            $referer = $db->query("SELECT * FROM userdata WHERE selftoken = '?s'", $referertoken);
+            $referer = $referer->fetch_assoc_array()[0];
             $referallmessage = "По вашей ссылке пришел пользователь" . $name;
-            $countsubscribes = $referer->countsubscribes + 1;
-            //"UPDATE userdata SET countsubscribes = $countsubscribes WHERE id = $referer->id"
-            $telegramApi->sendMessage($referer->chatid, $referallmessage);
-            if ($countsubscribes == 3 && $referer->countsubscribes >= 3 && !$referer->conditionscomplete) {
-                $telegramApi->sendMessage($referer->chatid, 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
+            $countsubscribes = $referer['countsubscribes'] + 1;
+            $db->query("UPDATE userdata SET countsubscribes = ?i  WHERE id = ?i", $countsubscribes, $referer['id']);
+            $telegramApi->sendMessage($referer['chatid'], $referallmessage);
+            if ($countsubscribes == 3 && $referer['countsubscribes'] >= 3 && !$referer['conditionscomplete']) {
+                $telegramApi->sendMessage($referer['chatid'], 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
             }
             break;
         case 1:
@@ -80,14 +61,15 @@ if ($isstart) {
         'username' => $name,
         'chatid' => $chat_id,
         'referertoken' => $referertoken,
-        'refererid' => $referer->id,
+        'refererid' => !empty($referer['id']) ? $referer['id'] : 0,
         'selftoken' => $usertoken,
         'date' => time(),
         'countreferal' => 0,
         'countsubscribes' => 0,
-        'conditionscomplete' => false
+        'conditionscomplete' => false,
+        'konkursid' => 1
     ];
-    $result = $dbManager->insert_record($tablename, $params);
+    $db->query('INSERT INTO `userdata` SET ?A["?s", ?i, "?s", "?s", "?s", ?i, ?i, ?i, ?i, ?i]', $params);
 
     $me = $telegramApi->query('getMe');
     $botname = $me->result->username;
@@ -97,13 +79,16 @@ if ($isstart) {
 
     $telegramApi->sendMessage($chat_id, $welcomemessage);
 }
-elseif ($iamready) {
+elseif ($iamsubcribe) {
     $ourchannels = []; //тут указаны chat_id каналов на которые нужно подписаться
     $notsubscribes = [];
-    $userdata = "SELECT * FROM userdata WHERE chatid = $chat_id";
-    $countsubscribes = $userdata->countsubscribes;
+    $userdata = $db->query("SELECT * FROM userdata WHERE chatid = ?i", $chat_id);
+    $userdata = $userdata->fetch_assoc_array()[0];
+    $countsubscribes = $userdata['countsubscribes'];
     foreach ($ourchannels as $ourchannel) {
-        if (getChatMember($ourchannel, $userid)) {
+        $issubscribe = $telegramApi->query('getChatMember', [$ourchannel, $chat_id]);
+        // TODO Полюбому надо как то разобрать
+        if ($ourchannels) {
             $countsubscribes++;
         } else {
             $notsubscribes[] = $ourchannel;
@@ -112,15 +97,14 @@ elseif ($iamready) {
 
     if ($countsubscribes == count($ourchannels)) {
         $telegramApi->sendMessage($chat_id, 'Красава! Ты подписался на все каналы!');
-        if ($userdata->countreferal >= 3 && !$userdata->conditionscomplete) {
+        if ($userdata['countreferal'] >= 3 && !$userdata['conditionscomplete']) {
             $telegramApi->sendMessage($chat_id, 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
         }
     } else {
-        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё подпишись на каналы:' . $notsubscribes);
+        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё. Подпишись на каналы:' . $notsubscribes);
     }
-    //"UPDATE userdata SET countsubscribes = $countsubscribes WHERE id = $userdata->id"
-}
-else {
+    $db->query("UPDATE userdata SET countsubscribes = ?i  WHERE id = ?i", $countsubscribes, $userdata['id']);
+} else {
     $randommessages = [
         'Ничто не дается так дешево как хочется',
         'Господи, сколько уже не сделано, а сколько еще предстоит не сделать!',
