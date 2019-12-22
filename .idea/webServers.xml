@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="1fe241be-cda4-43a4-8fe6-b427db929fac" name="beget" url="http://g995994o.beget.tech/">
+        <fileTransfer host="g995994o.beget.tech" port="21" rootFolder="/g995994o.beget.tech/public_html/konkurs_bot">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
