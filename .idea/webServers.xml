@@ -2,16 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6c3dc0d7-0947-422d-ba40-c0548ce88b31" name="нфсдщгв" url="http://yadev.hopto.org/">
-        <fileTransfer host="84.201.152.151" port="22" rootFolder="/var/www/html" accessType="SFTP" authAgent="true">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="1fe241be-cda4-43a4-8fe6-b427db929fac" name="beget" url="http://g995994o.beget.tech/">
-        <fileTransfer host="g995994o.beget.tech" port="21" rootFolder="/g995994o.beget.tech/public_html/konkurs_bot">
+      <webServer id="9f58dcba-6c5e-4a5e-b57d-a085632b000c" name="regru" url="http://37.140.192.24">
+        <fileTransfer host="37.140.192.24" port="21" rootFolder="/www/yaga.space/konkursbot">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

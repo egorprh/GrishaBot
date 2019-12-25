@@ -44,5 +44,4 @@ class TelegramBot
         return $data;
     }
 
-
 }

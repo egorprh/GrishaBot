@@ -18,13 +18,19 @@ include('classes/TelegramBot.php');
 use Krugozor\Database\Mysql\Mysql as Mysql;
 
 // Соединение с СУБД и получение объекта-"обертки" над "родным" mysqli
-$db = Mysql::create("localhost", "g995994o_konkurs", "kS2qiPsj")
+$db = Mysql::create("localhost", "u0905931_default", "6PTP_j!b")
     // Выбор базы данных
-    ->setDatabaseName("g995994o_konkurs")
+    ->setDatabaseName("u0905931_default")
     // Выбор кодировки
     ->setCharset("utf8");
 
 $telegramApi = new TelegramBot();
+
+///$telegramApi->query('getChat', ['chat_id' => '@egorprh']) получение ИД канала
+// ид канала -1001008709248
+// мой ид 342799025
+//$telegramApi->query('getChatMember', [-1001008709248, 342799025]) проверка подписан ли юзер на бота
+
 $message = $telegramApi->getMessage();
 
 $text = $message["message"]["text"]; //Текст сообщения
@@ -78,8 +84,7 @@ if ($isstart) {
     $welcomemessage = "Привет! Подпишись на этот канал и пригласи 3 друзей по этой ссылке:" . $referallurl . ", тогда ты сможешь учавствовать в розыграше!";
 
     $telegramApi->sendMessage($chat_id, $welcomemessage);
-}
-elseif ($iamsubcribe) {
+} elseif ($iamsubcribe) {
     $ourchannels = []; //тут указаны chat_id каналов на которые нужно подписаться
     $notsubscribes = [];
     $userdata = $db->query("SELECT * FROM userdata WHERE chatid = ?i", $chat_id);
@@ -128,7 +133,9 @@ elseif ($iamsubcribe) {
         'Дегенератор мыслей',
         'Любопытство не порок, а способ образования'
     ];
-    $telegramApi->sendMessage($chat_id, $randommessages[rand(0, 19)]);
+    if (!empty($chat_id)) {
+        $telegramApi->sendMessage($chat_id, $randommessages[rand(0, 19)]);
+    }
 }
 
 
