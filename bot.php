@@ -9,7 +9,23 @@
  * */
 
 echo 'This is Bot page.';
-//443210917:AAEgqEA_MdIXxXWylu7EX4IEJLbUHo8inME
+//BotToken 443210917:AAEgqEA_MdIXxXWylu7EX4IEJLbUHo8inME
+//App api_id: 1076612
+//App api_hash: c5475322db4fe71e85e31e593cab02be
+
+//Подключение Madeline с гитхаба
+if (!file_exists(__DIR__ . '/madeline.php')) {
+    copy('https://phar.madelineproto.xyz/madeline.php', __DIR__ . '/madeline.php');
+}
+include __DIR__ . '/madeline.php';
+
+$MadelineProto = new \danog\MadelineProto\API('session.madeline');
+$MadelineProto->start();
+
+$me = $MadelineProto->get_self();
+//Сюда надо передавать название канала из ссылки t.me/channelname
+$userschatinfo = $MadelineProto->get_pwr_chat('yadevchannel', true);
+$partisipants = $userschatinfo["participants"];
 
 include('vendor/autoload.php'); //Подключаем библиотеку
 include('classes/TelegramBot.php');
