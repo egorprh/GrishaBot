@@ -49,8 +49,7 @@ $date = $message["message"]["date"];
 
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
-$iamsubcribe = in_array('Я подписался', $textarr);
-
+$iamsubcribe = in_array('подписался', $textarr);
 
 if ($isstart) {
     switch (count($textarr)) {
@@ -107,6 +106,7 @@ if ($isstart) {
     $telegramApi->sendMessage($chat_id, $welcomemessage);
 
 } else if ($iamsubcribe) {
+    $telegramApi->sendMessage($chat_id, 'Ща проверим, одну минуту...');
 
     $notsubscribes = [];
     $userdata = $db->query("SELECT * FROM userdata WHERE chatid = ?i", $chat_id);
