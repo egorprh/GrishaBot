@@ -10,10 +10,10 @@
 
 echo 'This is Bot page.';
 
-///$telegramApi->query('getChat', ['chat_id' => '@egorprh']) получение ИД канала
-// ид канала -1001008709248
-// мой ид 342799025
-//$telegramApi->query('getChatMember', [-1001008709248, 342799025]) проверка подписан ли юзер на бота
+//TODO: 1) Вынести текты сообщений в константы
+//2) Поробовать найти более простой метод вычисления подписки пользователя
+//3) Создать таблицы для конкурсов
+//4) Проверить какие права нужны боту
 
 //Подключение Madeline
 if (!file_exists(__DIR__ . '/madeline.php')) {
@@ -116,7 +116,7 @@ if ($isstart) {
     $MadelineProto->start();
 
     foreach ($ourchannels as $ourchannel) {
-        //Сюда надо передавать название канала из ссылки t.me/channelname
+        //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
         $userschatinfo = $MadelineProto->get_pwr_chat($ourchannel, true);
         $partisipants = $userschatinfo["participants"];
         foreach ($partisipants as $partisipant) {

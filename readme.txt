@@ -9,6 +9,7 @@
  * 3) Проверяем так ли это
  * 4) Если да - то записываем в базу что он выполнил подписки
  * 5) Если нет - то показываем каналы на которые он не подписался
+ * !Чтобы проверить подписан ли человек на канал, бот должен быть админом.
  *
  * Когда пользователь выполняет все условия отправляем ему сообщение что он молодец.
  * Проверяем это, и когда пользователь делает все подписки, и когда приглашает нужное количество пользователей
@@ -23,4 +24,11 @@
  *  Для каждого конкурса новая таблица.
  *  Поля таблицы: id, username, chatid, referer, referertoken, selftoken, date, countreferal, countsubscribes, conditionscomplete, konkursid
  *
+ * Как узнать ИД канала:
+ * Web Channel ID https://github.com/GabrielRF/telegram-id#web-channel-id
+ * Click on the channel you want and see the url displayed on your browser.
+ * If it's a public group, the ID is @name of the group.
+ * If it's a private group then the url must be similar to:
+ * https://web.telegram.org/#/im?p=c1018013852_555990343349619165
+ * If this is the case, then the channel ID would be 1018013852. It's important to know that channel's IDs are always negative and 13 characters long! So add -100 to it, making the correct ID -1001018013852.
  * */
