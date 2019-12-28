@@ -12,26 +12,25 @@ echo 'This is Bot page.';
 //BotToken 443210917:AAEgqEA_MdIXxXWylu7EX4IEJLbUHo8inME
 //App api_id: 1076612
 //App api_hash: c5475322db4fe71e85e31e593cab02be
+///$telegramApi->query('getChat', ['chat_id' => '@egorprh']) получение ИД канала
+// ид канала -1001008709248
+// мой ид 342799025
+//$telegramApi->query('getChatMember', [-1001008709248, 342799025]) проверка подписан ли юзер на бота
 
-//Подключение Madeline с гитхаба
+//Подключение Madeline
 if (!file_exists(__DIR__ . '/madeline.php')) {
     copy('https://phar.madelineproto.xyz/madeline.php', __DIR__ . '/madeline.php');
 }
 include __DIR__ . '/madeline.php';
+include('vendor/autoload.php');
+include('classes/TelegramBot.php');
+
+use Krugozor\Database\Mysql\Mysql as Mysql;
 
 $MadelineProto = new \danog\MadelineProto\API('session.madeline');
 $MadelineProto->start();
 
-$me = $MadelineProto->get_self();
-//Сюда надо передавать название канала из ссылки t.me/channelname
-$userschatinfo = $MadelineProto->get_pwr_chat('yadevchannel', true);
-$partisipants = $userschatinfo["participants"];
-
-include('vendor/autoload.php'); //Подключаем библиотеку
-include('classes/TelegramBot.php');
-
-// Алиас для краткости
-use Krugozor\Database\Mysql\Mysql as Mysql;
+$telegramApi = new TelegramBot();
 
 // Соединение с СУБД и получение объекта-"обертки" над "родным" mysqli
 $db = Mysql::create("localhost", "u0905931_default", "6PTP_j!b")
@@ -40,12 +39,9 @@ $db = Mysql::create("localhost", "u0905931_default", "6PTP_j!b")
     // Выбор кодировки
     ->setCharset("utf8");
 
-$telegramApi = new TelegramBot();
-
-///$telegramApi->query('getChat', ['chat_id' => '@egorprh']) получение ИД канала
-// ид канала -1001008709248
-// мой ид 342799025
-//$telegramApi->query('getChatMember', [-1001008709248, 342799025]) проверка подписан ли юзер на бота
+//Сюда надо передавать название канала из ссылки t.me/channelname
+$userschatinfo = $MadelineProto->get_pwr_chat('yadevchannel', true);
+$partisipants = $userschatinfo["participants"];
 
 $message = $telegramApi->getMessage();
 
