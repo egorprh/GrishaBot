@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" serverName="2domain">
     <serverData>
-      <paths name="regru">
+      <paths name="2domain">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/www/yaga.space/konkursbot" />
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/www/yaga.space/ezcashbot/" />
           </mappings>
         </serverdata>
       </paths>

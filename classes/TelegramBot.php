@@ -1,9 +1,11 @@
 <?php
 
+include('classes/Constants.php');
+
 class TelegramBot
 {
 
-    protected $token = '443210917:AAEgqEA_MdIXxXWylu7EX4IEJLbUHo8inME';
+    protected $token = Constants::BOT_TOKEN_PROD;
 
     public function query($method, $params = [])
     {

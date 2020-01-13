@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
+    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора">
+      <change afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fortest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MadelineProto.log" beforeDir="false" afterPath="$PROJECT_DIR$/MadelineProto.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/bot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/TelegramBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TelegramBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madeline.phar" beforeDir="false" afterPath="$PROJECT_DIR$/madeline.phar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/madeline.phar.version" beforeDir="false" afterPath="$PROJECT_DIR$/madeline.phar.version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/session.madeline" beforeDir="false" afterPath="$PROJECT_DIR$/session.madeline" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +26,24 @@
       <executable />
     </execution>
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="db_test" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,6 +82,12 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/classes" />
+    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -94,6 +123,7 @@
       <workItem from="1577426525796" duration="3317000" />
       <workItem from="1577446106127" duration="7548000" />
       <workItem from="1577523986446" duration="3469000" />
+      <workItem from="1578940606551" duration="5148000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -177,14 +207,24 @@
     <option name="LAST_COMMIT_MESSAGE" value="+" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2475" y="200" width="800" height="677" key="#Deployment" timestamp="1577167251299">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1578941080539">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
+    <state x="430" y="164" width="815" height="526" key="#Deployment/49.27.1317.741@49.27.1317.741" timestamp="1578941080539" />
     <state x="2475" y="200" width="800" height="677" key="#Deployment/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577167251299" />
-    <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2" timestamp="1577520634151">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578220409068">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
+    <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
+    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2" timestamp="1578948757573">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1578948757573" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520634151" />
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1578948748729">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog/49.27.1317.741@49.27.1317.741" timestamp="1578948748729" />
     <state x="2663" y="297" width="424" height="484" key="FileChooserDialogImpl" timestamp="1577515766319">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -197,17 +237,35 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2668" y="247" width="414" height="583" key="Github.UntrackedFilesDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576734310968" />
-    <state x="2675" y="464" width="399" height="149" key="NewPhpFileDialog" timestamp="1577516614458">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog" timestamp="1578941376184">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1578941376184" />
     <state x="2675" y="464" width="399" height="149" key="NewPhpFileDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577516614458" />
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1578216522561">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog/49.27.1317.741@49.27.1317.741" timestamp="1578216522561" />
+    <state x="196" y="32" key="SettingsEditor" timestamp="1578206222413">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1577520639030">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520639030" />
-    <state x="2536" y="366" key="com.intellij.ide.util.TipDialog" timestamp="1577524050035">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1578940669099">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1578940669099" />
     <state x="2536" y="366" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577524050035" />
+    <state x="353" y="133" width="709" height="528" key="find.popup" timestamp="1578222848059">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="353" y="133" width="709" height="528" key="find.popup/49.27.1317.741@49.27.1317.741" timestamp="1578222848059" />
+    <state x="371" y="176" key="run.anything.popup" timestamp="1578206185577">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="371" y="176" key="run.anything.popup/49.27.1317.741@49.27.1317.741" timestamp="1578206185577" />
   </component>
 </project>

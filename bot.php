@@ -16,18 +16,21 @@ echo 'This is Bot page.';
 //4) Проверить какие права нужны боту
 
 //Подключение Madeline
-if (!file_exists(__DIR__ . '/madeline.php')) {
-    copy('https://phar.madelineproto.xyz/madeline.php', __DIR__ . '/madeline.php');
+if (!file_exists('classes/madeline/madeline.php')) {
+    copy('https://phar.madelineproto.xyz/madeline.php', 'classes/madeline/madeline.php');
 }
-include __DIR__ . '/madeline.php';
+include ('classes/madeline/madeline.php');
 include('vendor/autoload.php');
 include('classes/TelegramBot.php');
 include('classes/Constants.php');
 
 use Krugozor\Database\Mysql\Mysql as Mysql;
 
-$MadelineProto = new \danog\MadelineProto\API('session.madeline');
+$madelineSettings = [];
+$madelineSettings['app_info']['api_id'] = Constants::TG_API_ID;
+$madelineSettings['app_info']['api_hash'] = Constants::TG_API_HASH;
 
+$MadelineProto = new \danog\MadelineProto\API('classes/madeline/session.madeline', $madelineSettings);
 $telegramApi = new TelegramBot();
 
 // Соединение с СУБД и получение объекта-"обертки" над "родным" mysqli
@@ -47,6 +50,14 @@ $chat_id = $message["message"]["chat"]["id"]; //Уникальный идент�
 $name = $message["message"]["from"]["username"]; //Юзернейм пользователя
 $date = $message["message"]["date"];
 
+echo json_encode(var_dump($db));
+var_dump(
+    $db
+);
+die;
+
+$telegramApi->sendMessage($chat_id, json_encode(var_dump($db)));
+
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
 $iamsubcribe = in_array('подписался', $textarr);
@@ -60,9 +71,9 @@ if ($isstart) {
             $referallmessage = "По вашей ссылке пришел пользователь" . $name;
             $countsubscribes = $referer['countsubscribes'] + 1;
             $db->query("UPDATE userdata SET countsubscribes = ?i  WHERE id = ?i", $countsubscribes, $referer['id']);
-            $telegramApi->sendMessage($referer['chatid'], $referallmessage);
+            $telegramApi->sendMessage($referer['userid'], $referallmessage);
             if ($countsubscribes == $countsubscriptions && $referer['countsubscribes'] >= $countsubscriptions && !$referer['conditionscomplete']) {
-                $telegramApi->sendMessage($referer['chatid'], 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
+                $telegramApi->sendMessage($referer['userid'], 'Поздравляем вы выполнили все условия и учавсвтуете в конкурсе');
             }
             break;
         case 1:
@@ -74,7 +85,7 @@ if ($isstart) {
     $usertoken = substr(md5(microtime()), rand(0, 26), 9);
     $params = [
         'username' => $name,
-        'chatid' => $chat_id,
+        'userid' => $chat_id,
         'referertoken' => $referertoken,
         'refererid' => !empty($referer['id']) ? $referer['id'] : 0,
         'selftoken' => $usertoken,
@@ -84,7 +95,9 @@ if ($isstart) {
         'conditionscomplete' => false,
         'konkursid' => 1
     ];
+    $telegramApi->sendMessage($chat_id, json_encode(var_dump($db)));
     $db->query('INSERT INTO `userdata` SET ?A["?s", ?i, "?s", "?s", "?s", ?i, ?i, ?i, ?i, ?i]', $params);
+    $telegramApi->sendMessage($chat_id, json_encode($db->getQueryString()));
 
     $me = $telegramApi->query('getMe');
     $botname = $me->result->username;
@@ -109,7 +122,7 @@ if ($isstart) {
     $telegramApi->sendMessage($chat_id, 'Ща проверим, одну минуту...');
 
     $notsubscribes = [];
-    $userdata = $db->query("SELECT * FROM userdata WHERE chatid = ?i", $chat_id);
+    $userdata = $db->query("SELECT * FROM userdata WHERE userid = ?i", $chat_id);
     $userdata = $userdata->fetch_assoc_array()[0];
     $countsubscribes = $userdata['countsubscribes'];
 
