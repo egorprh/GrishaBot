@@ -6,24 +6,14 @@
 
 echo 'BotPag';
 
-
-//Подключение Madeline
-//if (!file_exists(__DIR__ . '/madeline.php')) {
-//    copy('https://phar.madelineproto.xyz/madeline.php', __DIR__ . '/madeline.php');
-//}
-//include __DIR__ . '/madeline.php';
-
 include('vendor/autoload.php');
 include('classes/TelegramBot.php');
 include('classes/Constants.php');
+include('classes/madelineManage.php');
 
 use Krugozor\Database\Mysql\Mysql as Mysql;
 
-$madelineSettings = [];
-$madelineSettings['app_info']['api_id'] = Constants::TG_API_ID;
-$madelineSettings['app_info']['api_hash'] = Constants::TG_API_HASH;
-
-//$MadelineProto = new \danog\MadelineProto\API('session.madeline');
+$ourchannels = Constants::CHANNELS;
 
 $telegramApi = new TelegramBot();
 
@@ -48,61 +38,59 @@ $iamsubcribe = in_array('подписался', $textarr);
 
 if ($isstart) {
 
-    $params = [
-        'username' => $name,
-        'userid' => $chat_id,
-        'countsubscribes' => 0,
-        'conditionscomplete' => 0,
-    ];
+    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM firstcomp WHERE userid = ?i)", $chat_id);
+    if (current($issubscribe->fetch_row()) == 0) {
+        $params = [
+            'username' => $name,
+            'userid' => $chat_id,
+            'countsubscribes' => 0,
+            'conditionscomplete' => 0,
+        ];
 
-    $db->query('INSERT INTO `firstcomp` SET ?A["?s", ?i, ?i, ?i]', $params);
+        $db->query('INSERT INTO `firstcomp` SET ?A["?s", ?i, ?i, ?i]', $params);
+    }
 
     foreach ($ourchannels as $channel) {
         $channelslinks[] = 't.me/' . $channel;
-        $links = implode(', ', $channelslinks);
     }
+    $links = implode(', ', $channelslinks);
 
     $welcomemessage = "Привет! Подпишись на каналы " . $links . " тогда ты сможешь учавствовать в розыграше! После того как подпишешься, обязательно приди сюда и напиши что 'Я подписался', чтобы мы проверили и ты смог учавcтовать в розыгрыше!";
 
     $telegramApi->sendMessage($chat_id, $welcomemessage);
 
-//} else if ($iamsubcribe) {
-//
-//    $telegramApi->sendMessage($chat_id, 'Ща проверим, одну минуту...');
-//
-//    $notsubscribes = [];
-//    $userdata = $db->query("SELECT * FROM `firstcomp` WHERE userid = ?i", $chat_id);
-//    $userdata = $userdata->fetch_assoc_array()[0];
-//    $countsubscribes = $userdata['countsubscribes'];
-//
-//    $MadelineProto->start();
-//
-//    foreach ($ourchannels as $ourchannel) {
-//        //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
-//        $userschatinfo = $MadelineProto->get_pwr_chat($ourchannel, true);
-//        $partisipants = $userschatinfo["participants"];
-//        foreach ($partisipants as $partisipant) {
-//            if ($partisipant['user']['id'] == $chat_id) {
-//                $countsubscribes++;
-//            } else {
-//                $notsubscribes[] = $ourchannel;
-//            }
-//        }
-//    }
-//
-//    if ($countsubscribes == count($ourchannels)) {
-//        $telegramApi->sendMessage($chat_id, 'Красава! Ты подписался на все каналы!');
-//        $db->query("UPDATE `firstcomp` SET countsubscribes = ?i  WHERE id = ?i", 1, $userdata['id']);
-//    } else {
-//
-//        foreach ($notsubscribes as $channel) {
-//            $channelslinks[] = 't.me/' . $channel;
-//            $links = implode(', ', $channelslinks);
-//        }
-//
-//        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё. Подпишись на каналы:' . $links . 'Затем снова напиши сюда "Я подписался"');
-//    }
-//    $db->query("UPDATE `firstcomp` SET countsubscribes = ?i  WHERE id = ?i", $countsubscribes, $userdata['id']);
+} else if ($iamsubcribe) {
+
+    $telegramApi->sendMessage($chat_id, 'Ща проверим, одну минуту...');
+
+    $notsubscribes = [];
+    $countsubscribes = 0;
+
+    foreach ($ourchannels as $key => $ourchannel) {
+        //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
+        $partisipants = madelineManage::get_participants($ourchannel);
+        foreach ($partisipants as $partisipant) {
+            if ($partisipant['user']['id'] == $chat_id) {
+                $countsubscribes++;
+                unset($ourchannels[$key]);
+            }
+        }
+    }
+
+    if ($countsubscribes == count($ourchannels)) {
+        $telegramApi->sendMessage($chat_id, 'Красава! Ты подписался на все каналы!');
+        $db->query("UPDATE `firstcomp` SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i",count($ourchannels), 1, $chat_id);
+    } else {
+        foreach ($ourchannels as $channel) {
+            $channelslinks[] = 't.me/' . $channel;
+        }
+        $links = implode(', ', $channelslinks);
+
+        $db->query("UPDATE `firstcomp` SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $chat_id);
+
+        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё. Подпишись на каналы:' . $links . ' Затем снова напиши сюда "Я подписался"');
+    }
+
 
 } else {
     $randommessages = [

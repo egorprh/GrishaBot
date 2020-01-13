@@ -12,6 +12,6 @@ class Constants {
     const TG_API_ID = '1076612';
     const TG_API_HASH = 'c5475322db4fe71e85e31e593cab02be';
 
-    const CHANNELS = ['yadevchannel'];
+    const CHANNELS = ['yadevchannel', 'journeytop', 'humor_rus'];
     const COUNT_SUBSCRIPTIONS = 0;
 }

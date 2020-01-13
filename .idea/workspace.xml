@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора">
-      <change afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fortest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/classes/madelineManage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MadelineProto.log" beforeDir="false" afterPath="$PROJECT_DIR$/MadelineProto.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.php" beforeDir="false" afterPath="$PROJECT_DIR$/bot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/TelegramBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TelegramBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madeline.phar" beforeDir="false" afterPath="$PROJECT_DIR$/madeline.phar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/madeline.phar.version" beforeDir="false" afterPath="$PROJECT_DIR$/madeline.phar.version" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/session.madeline" beforeDir="false" afterPath="$PROJECT_DIR$/session.madeline" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +115,7 @@
       <workItem from="1577426525796" duration="3317000" />
       <workItem from="1577446106127" duration="7548000" />
       <workItem from="1577523986446" duration="3469000" />
-      <workItem from="1578940606551" duration="5148000" />
+      <workItem from="1578940606551" duration="13052000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -188,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577520634292</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора">
+      <created>1578949069038</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1578949069038</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,7 +203,8 @@
     <MESSAGE value="Подлиты файлы Madeline + небольшой рефактор в bot.php" />
     <MESSAGE value="Создан класс констант + рефактор в bot.php" />
     <MESSAGE value="+" />
-    <option name="LAST_COMMIT_MESSAGE" value="+" />
+    <MESSAGE value="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора" />
   </component>
   <component name="WindowStateProjectService">
     <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1578941080539">
@@ -216,10 +216,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2" timestamp="1578948757573">
+    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2" timestamp="1578949068517">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1578948757573" />
+    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1578949068517" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520634151" />
     <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1578948748729">
       <screen x="49" y="27" width="1317" height="741" />
@@ -237,10 +237,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2668" y="247" width="414" height="583" key="Github.UntrackedFilesDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576734310968" />
-    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog" timestamp="1578941376184">
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog" timestamp="1578951934246">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1578941376184" />
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1578951934246" />
     <state x="2675" y="464" width="399" height="149" key="NewPhpFileDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577516614458" />
     <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1578216522561">
       <screen x="49" y="27" width="1317" height="741" />
@@ -250,9 +250,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1577520639030">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1578949076411">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1578949076411" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520639030" />
     <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1578940669099">
       <screen x="49" y="27" width="1317" height="741" />
