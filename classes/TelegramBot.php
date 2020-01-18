@@ -29,13 +29,13 @@ class TelegramBot
 
     }
 
-
-    public function sendMessage($chat_id, $text)
+    public function sendMessage($chat_id, $text, $reply_markup = '')
     {
 
         $this->query('sendMessage', [
             'text' => $text,
-            'chat_id' => $chat_id
+            'chat_id' => $chat_id,
+            'reply_markup' => $reply_markup
         ]);
 
     }
@@ -44,6 +44,18 @@ class TelegramBot
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
         return $data;
+    }
+
+    public function replyKeyboardMarkup($keyboard, $resize_keyboard = true, $one_time_keyboard = false, $selective = false) {
+
+        $keyboardobject = (object) [
+            'keyboard' => $keyboard,
+            'resize_keyboard' => $resize_keyboard,
+            'one_time_keyboard' => $one_time_keyboard,
+            'selective' => $selective
+        ];
+
+        return json_encode($keyboardobject);
     }
 
 }

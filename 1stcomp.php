@@ -29,39 +29,68 @@ $ourchannels = Constants::CHANNELS;
 $message = $telegramApi->getMessage();
 
 $text = $message["message"]["text"]; //Текст сообщения
-$chat_id = $message["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-$name = $message["message"]["from"]["username"]; //Юзернейм пользователя
+$userid = $message["message"]["from"]["id"]; //Уникальный идентификатор пользователя
+$username = $message["message"]["from"]["username"]; //Юзернейм пользователя
+$langcode = $message["message"]["from"]["language_code"];
+$firstname = $message["message"]["from"]["first_name"];
 
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
-$iamsubcribe = in_array('подписался', $textarr);
+
+$pressweekrules = strstr($text, 'УСЛОВИЯ');
+$pressrecalls = strstr($text, 'ОТЗЫВЫ');
+$iamsubcribe = strstr($text, 'ПОДПИСАЛСЯ');
+
+$getcompresults = strstr($text, 'даймнесписокучастников-пароль');
 
 if ($isstart) {
 
-    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM firstcomp WHERE userid = ?i)", $chat_id);
+    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_userdata WHERE userid = ?i)", $userid);
     if (current($issubscribe->fetch_row()) == 0) {
         $params = [
-            'username' => $name,
-            'userid' => $chat_id,
-            'countsubscribes' => 0,
-            'conditionscomplete' => 0,
+            'userid' => $userid,
+            'firstname' => $firstname,
+            'username' => $username,
+            'langcode' => $langcode,
+            'timecreated' => time()
         ];
 
-        $db->query('INSERT INTO `firstcomp` SET ?A["?s", ?i, ?i, ?i]', $params);
+        $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i]', $params);
     }
+
+    $welcomemessage = Constants::WELCOME_MESSAGE;
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+
+    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup);
+
+} else if ($pressweekrules) {
 
     foreach ($ourchannels as $channel) {
         $channelslinks[] = 't.me/' . $channel;
     }
     $links = implode(', ', $channelslinks);
 
-    $welcomemessage = "Привет! Подпишись на каналы " . $links . " тогда ты сможешь учавствовать в розыграше! После того как подпишешься, обязательно приди сюда и напиши что 'Я подписался', чтобы мы проверили и ты смог учавcтовать в розыгрыше!";
+    $messagetext = str_replace('{links}', $links, Constants::CONDITIONS_TEXT);
 
-    $telegramApi->sendMessage($chat_id, $welcomemessage);
+    $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    $telegramApi->sendMessage($userid, $messagetext, $reply_markup);
 
 } else if ($iamsubcribe) {
 
-    $telegramApi->sendMessage($chat_id, 'Ща проверим, одну минуту...');
+    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_comp1 WHERE userid = ?i)", $userid);
+    if (current($issubscribe->fetch_row()) == 0) {
+        $params = [
+            'userid' => $userid,
+            'countsubscribes' => 0,
+            'conditionscomplete' => 0,
+        ];
+
+        $db->query('INSERT INTO ezcash_comp1 SET ?A[?i, ?i, ?i]', $params);
+    }
+
+    $telegramApi->sendMessage($userid, 'Ща проверим, одну минуту...');
 
     $notsubscribes = [];
     $countsubscribes = 0;
@@ -70,27 +99,63 @@ if ($isstart) {
         //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
         $partisipants = madelineManage::get_participants($ourchannel);
         foreach ($partisipants as $partisipant) {
-            if ($partisipant['user']['id'] == $chat_id) {
+            if ($partisipant['user']['id'] == $userid) {
                 $countsubscribes++;
-                unset($ourchannels[$key]);
+                unset($ourchannels[$key]);//убираем чтобы сообщение показать с неподписанными каналами
             }
         }
     }
 
-    if ($countsubscribes == count($ourchannels)) {
-        $telegramApi->sendMessage($chat_id, 'Красава! Ты подписался на все каналы!');
-        $db->query("UPDATE `firstcomp` SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i",count($ourchannels), 1, $chat_id);
+    if ($countsubscribes == count(Constants::CHANNELS)) {
+        $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
+        $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+        $telegramApi->sendMessage($userid, 'Красава! Ты подписался на все каналы! Результаты будут объявлены в воскресенье', $reply_markup);
+        $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
         foreach ($ourchannels as $channel) {
             $channelslinks[] = 't.me/' . $channel;
         }
         $links = implode(', ', $channelslinks);
 
-        $db->query("UPDATE `firstcomp` SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $chat_id);
+        $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
 
-        $telegramApi->sendMessage($chat_id, 'Ты ещё не всё. Подпишись на каналы:' . $links . ' Затем снова напиши сюда "Я подписался"');
+        $telegramApi->sendMessage($userid, 'Ты ещё не всё. Подпишись на каналы: ' . $links . ' Затем снова нажми "Я подписался"');
     }
 
+} else if ($pressrecalls) {
+
+    $messagetext = 'На Канале t.me/xxx все отзывы и результаты предыдущих розыгрышей';
+
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    $telegramApi->sendMessage($userid, $messagetext, $reply_markup);
+
+} else if ($getcompresults) {
+
+    $telegramApi->sendMessage($userid, "Ща, соберу всех в кучу");
+
+    $sql = "SELECT DISTINCT u.username FROM ezcash_userdata u 
+            LEFT JOIN ezcash_comp1 comp1 ON comp1.userid = u.userid
+            WHERE comp1.conditionscomplete = 1";
+    $competitors = $db->query($sql);
+    $competitorslist = $competitors->fetch_row_array();
+
+    $outArray = [];
+    foreach ($competitorslist as $item) {
+        foreach ($item as $item2) {
+            $outArray[] = $item2;
+        }
+    }
+
+    $competitorsliststr = implode(', ', $outArray);
+
+    $filename = '../competitors.txt';
+    $bytesCount = file_put_contents($filename, $competitorsliststr);
+    if ($bytesCount === false) {
+        $telegramApi->sendMessage($userid, "При сохранении данных произошла ошибка!");
+    }
+
+    $telegramApi->sendMessage($userid, "Ссылка на скачивание: https://yaga.space/ezcashbot/competitors.txt Если сразу не скачается, клацни правой кнопкой мыши и нажми 'Сохранить как'");
 
 } else {
     $randommessages = [
@@ -116,8 +181,8 @@ if ($isstart) {
         'Дегенератор мыслей',
         'Любопытство не порок, а способ образования'
     ];
-    if (!empty($chat_id)) {
-        $telegramApi->sendMessage($chat_id, $randommessages[rand(0, 19)]);
+    if (!empty($userid)) {
+        $telegramApi->sendMessage($userid, $randommessages[rand(0, 19)]);
     }
 }
 
