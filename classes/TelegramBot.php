@@ -29,7 +29,7 @@ class TelegramBot
 
     }
 
-    public function sendMessage($chat_id, $text, $reply_markup = '', $parsemode = '')
+    public function sendMessage($chat_id, $text, $reply_markup = '', $parsemode = '', $disablepreview = true)
     {
 
         $this->query('sendMessage', [
@@ -37,6 +37,7 @@ class TelegramBot
             'chat_id' => $chat_id,
             'parse_mode' => $parsemode,
             'reply_markup' => $reply_markup,
+            'disable_web_page_preview' => $disablepreview
         ]);
 
     }

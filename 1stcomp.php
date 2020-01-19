@@ -25,6 +25,8 @@ $db = Mysql::create(Constants::DB_SERVER, Constants::DB_USERNAME, Constants::DB_
     ->setCharset("utf8");
 
 $ourchannels = Constants::CHANNELS;
+$ourchannelsurl = Constants::CHANNELS_URL;
+$ourchannelsname = Constants::CHANNELS_NAME;
 
 $message = $telegramApi->getMessage();
 
@@ -99,23 +101,25 @@ if ($isstart) {
 
     foreach ($ourchannels as $key => $ourchannel) {
         //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
-        $partisipants = madelineManage::get_participants($ourchannel);
-        foreach ($partisipants as $partisipant) {
-            if ($partisipant['user']['id'] == $userid) {
-                $countsubscribes++;
-                unset($ourchannels[$key]);//убираем чтобы сообщение показать с неподписанными каналами
-            }
+        $ispartisipant = madelineManage::get_participant($ourchannel, $userid);
+        if (!empty($ispartisipant)) {
+            $countsubscribes++;
+            unset($ourchannelsurl[$key]);//убираем чтобы сообщение показать с неподписанными каналами
         }
     }
 
     if ($countsubscribes == count(Constants::CHANNELS)) {
         $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-        $telegramApi->sendMessage($userid, 'Красава! Ты подписался на все каналы! Результаты будут объявлены в воскресенье. Мы пришлем тебе уведомление, чтоб ты не пропустил.', $reply_markup);
+        $telegramApi->sendMessage($userid, '🙏🏻 Дай пять. Ты теперь полноценный участник конкурса.
+
+Итоги будут подведены уже в эти выходные. Мы тебя оповестим и скинем трансляцию розыгрыша.
+
+Удачи!)', $reply_markup);
         $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
-        foreach ($ourchannels as $channel) {
-            $channelslinks[] = '➡ <a href="t.me/' . $channel . '">' . $channel . '</a>';
+        foreach ($ourchannelsurl as $key => $channel) {
+            $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
         }
         $links = implode("\n\n", $channelslinks);
 

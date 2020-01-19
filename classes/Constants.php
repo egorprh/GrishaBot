@@ -12,7 +12,10 @@ class Constants {
     const TG_API_ID = '1076612';
     const TG_API_HASH = 'c5475322db4fe71e85e31e593cab02be';
 
-    const CHANNELS = ['yadevchannel', 'journeytop'];
+    const CHANNELS = ['-1001488600170', '-1001147538491'];
+    const CHANNELS_URL = ['t.me/joinchat/AAAAAFi6PGpSUNn2_i87rg', 't.me/joinchat/AAAAAERmDDt9FwHQc-UK8Q'];
+    const CHANNELS_NAME = ['Вруби Рубильник', 'ИНФОРМАТОР'];
+
     const COUNT_SUBSCRIPTIONS = 0;
 
     const WELCOME_MESSAGE = '❌Здесь ты не узнаешь ответов на тупые вопросы по типу: 5+5, сколько км от Земли до Луны или у кого из порноактеров самый длинный болт.
@@ -35,8 +38,8 @@ class Constants {
 
 🚨Обязательное условие - подписка на спонсоров розыгрыша. Итоги будут подведены такого-то числа.
 
-➡<a href=\"t.me/yadevchannel\">yadevchannel</a> Тестовый канал.
-➡<a href=\"t.me/journeytop\">journeytop</a> Нереализованный канал.
+➡<a href=\"t.me/joinchat/AAAAAFi6PGpSUNn2_i87rg\">Вруби Рубильник</a>
+➡<a href=\"t.me/joinchat/AAAAAERmDDt9FwHQc-UK8Q\">ИНФОРМАТОР</a>
 
 И помни - шанс есть у каждого. Удачи!
 
