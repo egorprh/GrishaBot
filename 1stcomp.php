@@ -92,7 +92,7 @@ if ($isstart) {
         $db->query('INSERT INTO ezcash_comp1 SET ?A[?i, ?i, ?i]', $params);
     }
 
-    $telegramApi->sendMessage($userid, 'Ща проверим, одну минуту...');
+    $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
     $notsubscribes = [];
     $countsubscribes = 0;
@@ -115,13 +115,18 @@ if ($isstart) {
         $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
         foreach ($ourchannels as $channel) {
-            $channelslinks[] = 't.me/' . $channel;
+            $channelslinks[] = '➡ <a href="t.me/' . $channel . '">' . $channel . '</a>';
         }
-        $links = implode(', ', $channelslinks);
+        $links = implode("\n\n", $channelslinks);
 
         $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
 
-        $telegramApi->sendMessage($userid, 'Ты ещё не всё. Подпишись на каналы: ' . $links . ' Затем снова нажми "Я ПОДПИСАЛСЯ"');
+        $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"]];
+        $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+
+        $message = "😱Ты не доделал. Тебе еще нужно подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
+
+        $telegramApi->sendMessage($userid, $message, $reply_markup, 'HTML');
     }
 
 } else if ($pressrecalls) {
@@ -184,9 +189,9 @@ if ($isstart) {
 
     foreach ($outArray as $memberid) {
         if ($newcomp) {
-            $telegramApi->sendMessage($memberid, "У нас новый конкурс! Жми 'УСЛОВИЯ НЕДЕЛИ'", $reply_markup);
+            $telegramApi->sendMessage($memberid, "💣Мы запустили новый конкурс!\n🎁Жми 'УСЛОВИЯ НЕДЕЛИ', чтобы забрать свой выигрыш!", $reply_markup);
         } else if ($compresults) {
-            $telegramApi->sendMessage($memberid, "Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
+            $telegramApi->sendMessage($memberid, "🎉Мы подвели итоги конкурса, результат смотри здесь:\n <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
         }
     }
 
