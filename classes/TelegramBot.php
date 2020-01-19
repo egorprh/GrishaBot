@@ -29,13 +29,14 @@ class TelegramBot
 
     }
 
-    public function sendMessage($chat_id, $text, $reply_markup = '')
+    public function sendMessage($chat_id, $text, $reply_markup = '', $parsemode = '')
     {
 
         $this->query('sendMessage', [
             'text' => $text,
             'chat_id' => $chat_id,
-            'reply_markup' => $reply_markup
+            'parse_mode' => $parsemode,
+            'reply_markup' => $reply_markup,
         ]);
 
     }

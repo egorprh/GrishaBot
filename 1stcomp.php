@@ -42,6 +42,8 @@ $pressrecalls = strstr($text, 'ОТЗЫВЫ');
 $iamsubcribe = strstr($text, 'ПОДПИСАЛСЯ');
 
 $getcompresults = strstr($text, 'даймнесписокучастников-пароль');
+$newcomp = strstr($text, 'отправьуведомленияоновомконкурсе-пароль');
+$compresults = strstr($text, 'отправьуведомленияоготовностирезультатов-пароль');
 
 if ($isstart) {
 
@@ -62,7 +64,7 @@ if ($isstart) {
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
 
-    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup);
+    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup, 'HTML');
 
 } else if ($pressweekrules) {
 
@@ -71,11 +73,11 @@ if ($isstart) {
     }
     $links = implode(', ', $channelslinks);
 
-    $messagetext = str_replace('{links}', $links, Constants::CONDITIONS_TEXT);
+    $messagetext = Constants::CONDITIONS_TEXT;
 
     $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-    $telegramApi->sendMessage($userid, $messagetext, $reply_markup);
+    $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
 
 } else if ($iamsubcribe) {
 
@@ -109,7 +111,7 @@ if ($isstart) {
     if ($countsubscribes == count(Constants::CHANNELS)) {
         $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-        $telegramApi->sendMessage($userid, 'Красава! Ты подписался на все каналы! Результаты будут объявлены в воскресенье', $reply_markup);
+        $telegramApi->sendMessage($userid, 'Красава! Ты подписался на все каналы! Результаты будут объявлены в воскресенье. Мы пришлем тебе уведомление, чтоб ты не пропустил.', $reply_markup);
         $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
         foreach ($ourchannels as $channel) {
@@ -119,16 +121,16 @@ if ($isstart) {
 
         $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
 
-        $telegramApi->sendMessage($userid, 'Ты ещё не всё. Подпишись на каналы: ' . $links . ' Затем снова нажми "Я подписался"');
+        $telegramApi->sendMessage($userid, 'Ты ещё не всё. Подпишись на каналы: ' . $links . ' Затем снова нажми "Я ПОДПИСАЛСЯ"');
     }
 
 } else if ($pressrecalls) {
 
-    $messagetext = 'На Канале t.me/xxx все отзывы и результаты предыдущих розыгрышей';
+    $messagetext = 'Все отзывы и результаты предыдущих розыгрышей смотри на канале: <a href="t.me/EZCashOtzivi">Отзывы EZCash</a>';
 
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-    $telegramApi->sendMessage($userid, $messagetext, $reply_markup);
+    $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
 
 //    $inline_button1 = ["text" => "👍🏻ОТЗЫВЫ", "url" => 't.me/telesig'];
 //    $inline_keyboard = [[$inline_button1]];
@@ -164,6 +166,32 @@ if ($isstart) {
 
     $telegramApi->sendMessage($userid, "Ссылка на скачивание: https://yaga.space/ezcashbot/competitors.txt Если сразу не скачается, клацни правой кнопкой мыши и нажми 'Сохранить как'");
 
+} else if ($newcomp || $compresults) {
+
+    $sql = "SELECT userid FROM ezcash_userdata";
+    $competitors = $db->query($sql);
+    $competitorslist = $competitors->fetch_row_array();
+
+    $outArray = [];
+    foreach ($competitorslist as $item) {
+        foreach ($item as $item2) {
+            $outArray[] = $item2;
+        }
+    }
+
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+
+    foreach ($outArray as $memberid) {
+        if ($newcomp) {
+            $telegramApi->sendMessage($memberid, "У нас новый конкурс! Жми 'УСЛОВИЯ НЕДЕЛИ'", $reply_markup);
+        } else if ($compresults) {
+            $telegramApi->sendMessage($memberid, "Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
+        }
+    }
+
+    $telegramApi->sendMessage($userid, "Сообщения успешно отправлены.");
+
 } else {
     $randommessages = [
         'Ничто не дается так дешево как хочется',
@@ -189,7 +217,7 @@ if ($isstart) {
         'Любопытство не порок, а способ образования'
     ];
     if (!empty($userid)) {
-        $telegramApi->sendMessage($userid, $randommessages[rand(0, 19)]);
+        $telegramApi->sendMessage($userid, '🤖Я такой команды не знаю, поэтому вот: ' . $randommessages[rand(0, 19)]);
     }
 }
 
