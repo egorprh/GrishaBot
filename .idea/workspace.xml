@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/competitors.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/TelegramBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TelegramBot.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +115,8 @@
       <workItem from="1577446106127" duration="7548000" />
       <workItem from="1577523986446" duration="3469000" />
       <workItem from="1578940606551" duration="13052000" />
-      <workItem from="1579362750323" duration="20826000" />
+      <workItem from="1579362750323" duration="21131000" />
+      <workItem from="1579420788180" duration="4236000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -189,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578949069038</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Рабочая версия бота:&#10;- приветственное сообщения и сообщения с условиями вынесены в константы&#10;- Добавлен метод для работы с кнопками&#10;- Теперь создается 2 таблицы: одна для всех подписчиков, другая для участников конкурса&#10;- Добавлена возможность скачивания списка участников кто выполнил все условия">
+      <created>1579387763231</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1579387763231</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,7 +212,8 @@
     <MESSAGE value="Создан класс констант + рефактор в bot.php" />
     <MESSAGE value="+" />
     <MESSAGE value="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создан отдельный файл для первого розыгрыша&#10;Подключен новый хостинг и бд и новый бот&#10;Madeline походу не работает из-за Роскомнадзора" />
+    <MESSAGE value="Рабочая версия бота:&#10;- приветственное сообщения и сообщения с условиями вынесены в константы&#10;- Добавлен метод для работы с кнопками&#10;- Теперь создается 2 таблицы: одна для всех подписчиков, другая для участников конкурса&#10;- Добавлена возможность скачивания списка участников кто выполнил все условия" />
+    <option name="LAST_COMMIT_MESSAGE" value="Рабочая версия бота:&#10;- приветственное сообщения и сообщения с условиями вынесены в константы&#10;- Добавлен метод для работы с кнопками&#10;- Теперь создается 2 таблицы: одна для всех подписчиков, другая для участников конкурса&#10;- Добавлена возможность скачивания списка участников кто выполнил все условия" />
   </component>
   <component name="WindowStateProjectService">
     <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1578941080539">
@@ -218,10 +225,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2" timestamp="1578957000757">
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1579387762813">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="250" y="214" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1578957000757" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579387762813" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520634151" />
     <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1579385451947">
       <screen x="49" y="27" width="1317" height="741" />
@@ -244,23 +251,23 @@
     </state>
     <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1578951934246" />
     <state x="2675" y="464" width="399" height="149" key="NewPhpFileDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577516614458" />
-    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1578216522561">
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1579425234416">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog/49.27.1317.741@49.27.1317.741" timestamp="1578216522561" />
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog/49.27.1317.741@49.27.1317.741" timestamp="1579425234416" />
     <state x="196" y="32" key="SettingsEditor" timestamp="1578206222413">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1578957006044">
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579387765931">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1578957006044" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579387765931" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520639030" />
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1579363299209">
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1579420791566">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1579363299209" />
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1579420791566" />
     <state x="2536" y="366" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577524050035" />
     <state x="353" y="133" width="709" height="528" key="find.popup" timestamp="1578222848059">
       <screen x="49" y="27" width="1317" height="741" />

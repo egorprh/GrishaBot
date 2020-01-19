@@ -130,6 +130,13 @@ if ($isstart) {
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
     $telegramApi->sendMessage($userid, $messagetext, $reply_markup);
 
+//    $inline_button1 = ["text" => "👍🏻ОТЗЫВЫ", "url" => 't.me/telesig'];
+//    $inline_keyboard = [[$inline_button1]];
+//    $keyboard = ["inline_keyboard"=>$inline_keyboard];
+//    $replyMarkup = json_encode($keyboard);
+//
+//    $telegramApi->sendMessage($userid, '👇🏻👇🏻👇🏻', $replyMarkup);
+
 } else if ($getcompresults) {
 
     $telegramApi->sendMessage($userid, "Ща, соберу всех в кучу");

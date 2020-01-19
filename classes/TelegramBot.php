@@ -46,10 +46,10 @@ class TelegramBot
         return $data;
     }
 
-    public function replyKeyboardMarkup($keyboard, $resize_keyboard = true, $one_time_keyboard = false, $selective = false) {
+    public function replyKeyboardMarkup($keyboardarr, $resize_keyboard = true, $one_time_keyboard = false, $selective = false) {
 
         $keyboardobject = (object) [
-            'keyboard' => $keyboard,
+            'keyboard' => $keyboardarr,
             'resize_keyboard' => $resize_keyboard,
             'one_time_keyboard' => $one_time_keyboard,
             'selective' => $selective
