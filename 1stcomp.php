@@ -161,15 +161,16 @@ if ($isstart) {
         }
     }
 
-    $competitorsliststr = implode(', ', $outArray);
+    $competitorsliststr = implode("\n", $outArray);
 
-    $filename = '../competitors.txt';
-    $bytesCount = file_put_contents($filename, $competitorsliststr);
+    $file = '../competitors.csv';
+    $bom = "\xEF\xBB\xBF";
+    $bytesCount = file_put_contents($file, $bom . $competitorsliststr);
     if ($bytesCount === false) {
         $telegramApi->sendMessage($userid, "При сохранении данных произошла ошибка!");
     }
 
-    $telegramApi->sendMessage($userid, "Ссылка на скачивание: https://yaga.space/ezcashbot/competitors.txt Если сразу не скачается, клацни правой кнопкой мыши и нажми 'Сохранить как'");
+    $telegramApi->sendMessage($userid, "Ссылка на скачивание: https://yaga.space/ezcashbot/competitors.csv Если сразу не скачается, клацни правой кнопкой мыши и нажми 'Сохранить как'");
 
 } else if ($newcomp || $compresults) {
 
