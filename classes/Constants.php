@@ -16,6 +16,8 @@ class Constants {
     const CHANNELS_URL = ['t.me/joinchat/AAAAAFi6PGpSUNn2_i87rg', 't.me/joinchat/AAAAAERmDDt9FwHQc-UK8Q'];
     const CHANNELS_NAME = ['Вруби Рубильник', 'ИНФОРМАТОР'];
 
+    const ADMINS = [342799025, 377226192];
+
     const COUNT_SUBSCRIPTIONS = 0;
 
     const WELCOME_MESSAGE = '❌Здесь ты не узнаешь ответов на тупые вопросы по типу: 5+5, сколько км от Земли до Луны или у кого из порноактеров самый длинный болт.
