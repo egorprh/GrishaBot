@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="Новый метод для определения подписок, быстрее в 100500 раз + фиксы по тексту">
+    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +120,7 @@
       <workItem from="1578940606551" duration="13052000" />
       <workItem from="1579362750323" duration="21131000" />
       <workItem from="1579420788180" duration="27677000" />
-      <workItem from="1579577186482" duration="1985000" />
+      <workItem from="1579577186482" duration="2687000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -235,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579458316825</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Добавлена функция обратной связи">
+      <created>1579579215026</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1579579215026</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,7 +264,8 @@
     <MESSAGE value="Text fix" />
     <MESSAGE value="Сохранение в эксель" />
     <MESSAGE value="Новый метод для определения подписок, быстрее в 100500 раз + фиксы по тексту" />
-    <option name="LAST_COMMIT_MESSAGE" value="Новый метод для определения подписок, быстрее в 100500 раз + фиксы по тексту" />
+    <MESSAGE value="Добавлена функция обратной связи" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена функция обратной связи" />
   </component>
   <component name="WindowStateProjectService">
     <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1578941080539">
@@ -270,10 +277,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1579578108214">
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1579579214653">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579578108214" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579579214653" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520634151" />
     <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1579458332889">
       <screen x="49" y="27" width="1317" height="741" />
@@ -304,10 +311,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579458334257">
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579579261322">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579458334257" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579579261322" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577520639030" />
     <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1579577187234">
       <screen x="49" y="27" width="1317" height="741" />
