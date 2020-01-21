@@ -51,6 +51,12 @@ $compresults = strstr($text, 'отправьуведомленияоготовн
 
 if ($isstart) {
 
+    $welcomemessage = Constants::WELCOME_MESSAGE;
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+
+    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup, 'HTML');
+
     $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_userdata WHERE userid = ?i)", $userid);
     if (current($issubscribe->fetch_row()) == 0) {
         $params = [
@@ -64,18 +70,12 @@ if ($isstart) {
         $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i]', $params);
     }
 
-    $welcomemessage = Constants::WELCOME_MESSAGE;
-    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
-    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-
-    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup, 'HTML');
-
 } else if ($pressweekrules) {
 
-    foreach ($ourchannels as $channel) {
-        $channelslinks[] = 't.me/' . $channel;
-    }
-    $links = implode(', ', $channelslinks);
+//    foreach ($ourchannels as $channel) {
+//        $channelslinks[] = 't.me/' . $channel;
+//    }
+//    $links = implode(', ', $channelslinks);
 
     $messagetext = Constants::CONDITIONS_TEXT;
 
@@ -84,6 +84,8 @@ if ($isstart) {
     $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
 
 } else if ($iamsubcribe) {
+
+    $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
     $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_comp1 WHERE userid = ?i)", $userid);
     if (current($issubscribe->fetch_row()) == 0) {
@@ -95,8 +97,6 @@ if ($isstart) {
 
         $db->query('INSERT INTO ezcash_comp1 SET ?A[?i, ?i, ?i]', $params);
     }
-
-    $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
     $notsubscribes = [];
     $countsubscribes = 0;
@@ -225,12 +225,11 @@ if ($isstart) {
 
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    $telegramApi->sendMessage($userid, 'Вопрос приняли, друг. Ожидай ответа.', $reply_markup);
 
     foreach (Constants::ADMINS as $admin) {
         $telegramApi->sendMessage($admin, 'От пользователя @' . $username . ' поступил ' . $text, $reply_markup);
     }
-
-    $telegramApi->sendMessage($userid, 'Вопрос приняли, друг. Ожидай ответа.', $reply_markup);
 
 } else {
 //    $randommessages = [
@@ -257,13 +256,13 @@ if ($isstart) {
 //        'Любопытство не порок, а способ образования'
 //    ];
     if (!empty($userid)) {
-        $telegramApi->sendMessage($userid, '🤖 Дружище, я не понимаю о чём ты.
+        $telegramApi->sendMessage($userid, "🤖 Дружище, я не понимаю о чём ты.
         
-👉🏻 Если хочешь участвовать в конкурсе - жми "📃УСЛОВИЯ НЕДЕЛИ".
+👉🏻 Если хочешь участвовать в конкурсе - жми\n\"📃УСЛОВИЯ НЕДЕЛИ\".
 
-👉🏻 Если хочешь почитать отзывы о наших бомбических конкурсах - жми "👍🏻ОТЗЫВЫ".
+👉🏻 Если хочешь почитать отзывы о наших бомбических конкурсах - жми\n\"👍🏻ОТЗЫВЫ\".
  
-👉🏻 Если у тебя есть вопрос или ты что-то хочешь нам сказать - жми "📪ОБРАТНАЯ СВЯЗЬ"');
+👉🏻 Если у тебя есть вопрос или ты что-то хочешь нам сказать - жми\n\"📪ОБРАТНАЯ СВЯЗЬ\"", $keyboard);
     }
 }
 
