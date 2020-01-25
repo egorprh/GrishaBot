@@ -32,9 +32,9 @@ $message = $telegramApi->getMessage();
 
 $text = $message["message"]["text"]; //Текст сообщения
 $userid = $message["message"]["from"]["id"]; //Уникальный идентификатор пользователя
-$username = $message["message"]["from"]["username"]; //Юзернейм пользователя
-$langcode = $message["message"]["from"]["language_code"];
-$firstname = $message["message"]["from"]["first_name"];
+$username = $message["message"]["from"]["username"] ?: ''; //Юзернейм пользователя
+$langcode = $message["message"]["from"]["language_code"] ?: 0;
+$firstname = $message["message"]["from"]["first_name"] ?: '';
 
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
@@ -48,6 +48,7 @@ $userquestion = strstr($text, 'опрос');
 $getcompresults = strstr($text, 'даймнесписокучастников-пароль');
 $newcomp = strstr($text, 'отправьуведомленияоновомконкурсе-пароль');
 $compresults = strstr($text, 'отправьуведомленияоготовностирезультатов-пароль');
+$viewcountmembers = strstr($text, 'скольконародавботе-пароль');
 
 if ($isstart) {
 
@@ -77,7 +78,7 @@ if ($isstart) {
 //    }
 //    $links = implode(', ', $channelslinks);
 
-    $messagetext = Constants::CONDITIONS_TEXT;
+    $messagetext = Constants::WAIT_RESULT_TEXT;
 
     $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
@@ -231,6 +232,15 @@ if ($isstart) {
         $telegramApi->sendMessage($admin, 'От пользователя @' . $username . ' поступил ' . $text, $reply_markup);
     }
 
+} else if ($viewcountmembers) {
+    $sql = "SELECT COUNT(userid) FROM ezcash_userdata";
+    $countmembers = $db->query($sql);
+    $countmembers = $countmembers->fetch_row();
+
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+
+    $telegramApi->sendMessage($userid, current($countmembers), $reply_markup);
 } else {
 //    $randommessages = [
 //        'Ничто не дается так дешево как хочется',
@@ -262,7 +272,7 @@ if ($isstart) {
 
 👉🏻 Если хочешь почитать отзывы о наших бомбических конкурсах - жми\n\"👍🏻ОТЗЫВЫ\".
  
-👉🏻 Если у тебя есть вопрос или ты что-то хочешь нам сказать - жми\n\"📪ОБРАТНАЯ СВЯЗЬ\"", $keyboard);
+👉🏻 Если у тебя есть вопрос или ты что-то хочешь нам сказать - жми\n\"📪ОБРАТНАЯ СВЯЗЬ\"");
     }
 }
 
