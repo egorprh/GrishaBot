@@ -2,8 +2,16 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="357cf458-76d5-4c15-86d6-d784b8626ba1" name="2domain" url="http://31.31.198.105">
+      <webServer id="357cf458-76d5-4c15-86d6-d784b8626ba1" name="2domain.ezcashbot" url="http://31.31.198.105">
         <fileTransfer host="31.31.198.105" port="21" rootFolder="/www/yaga.space/ezcashbot/">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="feaec732-2ef4-419b-8a7b-1138d7f291d4" name="2domain.dev.ezcashbot" url="http://31.31.198.105">
+        <fileTransfer host="31.31.198.105" port="21" rootFolder="/www/yaga.space/ezcashbot-dev/">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

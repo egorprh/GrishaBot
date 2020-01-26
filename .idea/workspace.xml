@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +123,8 @@
       <workItem from="1579362750323" duration="21131000" />
       <workItem from="1579420788180" duration="27677000" />
       <workItem from="1579577186482" duration="2687000" />
+      <workItem from="1580024930108" duration="66000" />
+      <workItem from="1580031183947" duration="1900000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -249,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579602878485</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="- фиксы&#10;- добавлена функция получения количества участников">
+      <created>1579990573201</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1579990573201</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,22 +284,23 @@
     <MESSAGE value="Новый метод для определения подписок, быстрее в 100500 раз + фиксы по тексту" />
     <MESSAGE value="Добавлена функция обратной связи" />
     <MESSAGE value="Some fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some fix" />
+    <MESSAGE value="- фиксы&#10;- добавлена функция получения количества участников" />
+    <option name="LAST_COMMIT_MESSAGE" value="- фиксы&#10;- добавлена функция получения количества участников" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2475" y="200" width="815" height="526" key="#Deployment" timestamp="1579602604428">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1579991620851">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="164" width="815" height="526" key="#Deployment/49.27.1317.741@49.27.1317.741" timestamp="1578941080539" />
+    <state x="430" y="164" width="815" height="526" key="#Deployment/49.27.1317.741@49.27.1317.741" timestamp="1579991620851" />
     <state x="2475" y="200" width="800" height="677" key="#Deployment/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602604428" />
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578220409068">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="2445" y="135" width="953" height="554" key="CommitChangelistDialog2" timestamp="1579602878338">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1579990572896">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579579214653" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579990572896" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602878338" />
     <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1579981571419">
       <screen x="49" y="27" width="1317" height="741" />
@@ -320,10 +331,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="2475" y="275" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579602879795">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579990575929">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579579261322" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579990575929" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602879795" />
     <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1579577187234">
       <screen x="49" y="27" width="1317" height="741" />

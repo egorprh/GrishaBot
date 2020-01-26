@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="2domain">
+  <component name="PublishConfigData" serverName="2domain.dev.ezcashbot">
     <serverData>
-      <paths name="2domain">
+      <paths name="2domain.dev.ezcashbot">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/www/yaga.space/ezcashbot-dev/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="2domain.ezcashbot">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/www/yaga.space/ezcashbot/" />

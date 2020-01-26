@@ -199,7 +199,7 @@ if ($isstart) {
         if ($newcomp) {
             $telegramApi->sendMessage($memberid, "💣Мы запустили новый конкурс!\n🎁Жми 'УСЛОВИЯ НЕДЕЛИ', чтобы забрать свой выигрыш!", $reply_markup);
         } else if ($compresults) {
-            $telegramApi->sendMessage($memberid, "🎉Мы подвели итоги конкурса, результат смотри здесь:\n <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
+            $telegramApi->sendMessage($memberid, "🎉Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
         }
     }
 
