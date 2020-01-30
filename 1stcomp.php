@@ -78,7 +78,7 @@ if ($isstart) {
 //    }
 //    $links = implode(', ', $channelslinks);
 
-    $messagetext = Constants::WAIT_RESULT_TEXT;
+    $messagetext = Constants::CONDITIONS_TEXT;
 
     $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
@@ -88,7 +88,7 @@ if ($isstart) {
 
     $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
-    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_comp1 WHERE userid = ?i)", $userid);
+    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_comp2 WHERE userid = ?i)", $userid);
     if (current($issubscribe->fetch_row()) == 0) {
         $params = [
             'userid' => $userid,
@@ -96,7 +96,7 @@ if ($isstart) {
             'conditionscomplete' => 0,
         ];
 
-        $db->query('INSERT INTO ezcash_comp1 SET ?A[?i, ?i, ?i]', $params);
+        $db->query('INSERT INTO ezcash_comp2 SET ?A[?i, ?i, ?i]', $params);
     }
 
     $notsubscribes = [];
@@ -119,14 +119,14 @@ if ($isstart) {
 Итоги будут подведены уже в эти выходные. Мы тебя оповестим и скинем трансляцию розыгрыша.
 
 Удачи!)', $reply_markup);
-        $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
+        $db->query("UPDATE ezcash_comp2 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
         foreach ($ourchannelsurl as $key => $channel) {
             $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
         }
         $links = implode("\n\n", $channelslinks);
 
-        $db->query("UPDATE ezcash_comp1 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
+        $db->query("UPDATE ezcash_comp2 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
 
         $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
@@ -156,7 +156,7 @@ if ($isstart) {
     $telegramApi->sendMessage($userid, "Ща, соберу всех в кучу");
 
     $sql = "SELECT DISTINCT u.username FROM ezcash_userdata u 
-            LEFT JOIN ezcash_comp1 comp1 ON comp1.userid = u.userid
+            LEFT JOIN ezcash_comp2 comp1 ON comp1.userid = u.userid
             WHERE comp1.conditionscomplete = 1";
     $competitors = $db->query($sql);
     $competitorslist = $competitors->fetch_row_array();
@@ -197,7 +197,11 @@ if ($isstart) {
 
     foreach ($outArray as $memberid) {
         if ($newcomp) {
-            $telegramApi->sendMessage($memberid, "💣Мы запустили новый конкурс!\n🎁Жми 'УСЛОВИЯ НЕДЕЛИ', чтобы забрать свой выигрыш!", $reply_markup);
+            $telegramApi->sendMessage($memberid, "⏰ТЫ ТОЧНО НИЧЕГО НЕ УПУСКАЕШЬ?
+
+У нас новый розыгрыш подъехал. Жми кнопку «УСЛОВИЯ НЕДЕЛИ» и выигрывай ценные призы.
+
+Удачи и ещё раз удачи!", $reply_markup);
         } else if ($compresults) {
             $telegramApi->sendMessage($memberid, "🎉Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>", $reply_markup, 'HTML');
         }
