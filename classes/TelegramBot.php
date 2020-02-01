@@ -23,9 +23,13 @@ class TelegramBot
 
         $client = new \GuzzleHttp\Client(['base_uri' => $url]);
 
-        $result = $client->request('GET');
+        try {
+            $result = $client->request('GET');
+        } catch (Exception $e) {
+            $result = false;
+        }
 
-        return json_decode($result->getBody());
+        return !empty($result) ? json_decode($result->getBody()) : false;
 
     }
 

@@ -196,6 +196,7 @@ if ($isstart) {
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
 
     foreach ($outArray as $memberid) {
+        usleep(100000);
         if ($newcomp) {
             $telegramApi->sendMessage($memberid, "⏰ТЫ ТОЧНО НИЧЕГО НЕ УПУСКАЕШЬ?
 
