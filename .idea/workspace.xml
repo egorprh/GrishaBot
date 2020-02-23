@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="- фиксы&#10;- добавлена функция получения количества участников">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="- фикc">
+      <change afterPath="$PROJECT_DIR$/classes/BotFunctions.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classes/Manage.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sendmessagescript.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Constants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/TelegramBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TelegramBot.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/madelineManage.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/madelineManage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fortest.php" beforeDir="false" afterPath="$PROJECT_DIR$/fortest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +70,16 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/vendor/irazasyed/telegram-bot-sdk" />
+      <path value="$PROJECT_DIR$/vendor/illuminate/support" />
+      <path value="$PROJECT_DIR$/vendor/illuminate/contracts" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
     </include_path>
   </component>
   <component name="ProjectId" id="1V76jIanglXIKeE94PwxzomNf44" />
@@ -78,11 +102,11 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/classes" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -124,7 +148,11 @@
       <workItem from="1579420788180" duration="27677000" />
       <workItem from="1579577186482" duration="2687000" />
       <workItem from="1580024930108" duration="66000" />
-      <workItem from="1580031183947" duration="1900000" />
+      <workItem from="1580031183947" duration="1945000" />
+      <workItem from="1580570841470" duration="12511000" />
+      <workItem from="1580629923746" duration="10687000" />
+      <workItem from="1581924285843" duration="517000" />
+      <workItem from="1582453021427" duration="13326000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -259,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579990573201</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="- фикc">
+      <created>1580070625984</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1580070625984</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,27 +320,28 @@
     <MESSAGE value="Добавлена функция обратной связи" />
     <MESSAGE value="Some fix" />
     <MESSAGE value="- фиксы&#10;- добавлена функция получения количества участников" />
-    <option name="LAST_COMMIT_MESSAGE" value="- фиксы&#10;- добавлена функция получения количества участников" />
+    <MESSAGE value="- фикc" />
+    <option name="LAST_COMMIT_MESSAGE" value="- фикc" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2475" y="200" width="815" height="526" key="#Deployment" timestamp="1580369346361">
-      <screen x="1920" y="0" width="1920" height="1080" />
+    <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1582453778096">
+      <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="164" width="815" height="526" key="#Deployment/49.27.1317.741@49.27.1317.741" timestamp="1579991620851" />
-    <state x="2475" y="200" width="800" height="677" key="#Deployment/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1580369346361" />
+    <state x="430" y="164" width="815" height="526" key="#Deployment/49.27.1317.741@49.27.1317.741" timestamp="1582453778096" />
+    <state x="2475" y="200" width="800" height="677" key="#Deployment/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602604428" />
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1578220409068">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="2445" y="135" width="953" height="554" key="CommitChangelistDialog2" timestamp="1580371667652">
-      <screen x="1920" y="0" width="1920" height="1080" />
-    </state>
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1579990572896" />
-    <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1580371667652" />
-    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1579981571419">
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1580578383738">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog/49.27.1317.741@49.27.1317.741" timestamp="1579981571419" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1580578383738" />
+    <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602878338" />
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1582453050339">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog/49.27.1317.741@49.27.1317.741" timestamp="1582453050339" />
     <state x="2663" y="297" width="424" height="484" key="FileChooserDialogImpl" timestamp="1577515766319">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -318,46 +354,53 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2668" y="247" width="414" height="583" key="Github.UntrackedFilesDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1576734310968" />
-    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog" timestamp="1578951934246">
+    <state x="412" y="115" width="580" height="564" key="MultipleFileMergeDialog" timestamp="1580570891809">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1578951934246" />
+    <state x="412" y="115" width="580" height="564" key="MultipleFileMergeDialog/49.27.1317.741@49.27.1317.741" timestamp="1580570891809" />
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog" timestamp="1582486947807">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="567" y="345" width="274" height="149" key="NewPhpFileDialog/49.27.1317.741@49.27.1317.741" timestamp="1582486947807" />
     <state x="2675" y="464" width="399" height="149" key="NewPhpFileDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577516614458" />
-    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1579425234416">
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog" timestamp="1580572524672">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog/49.27.1317.741@49.27.1317.741" timestamp="1579425234416" />
+    <state x="478" y="110" width="448" height="574" key="RollbackChangesDialog/49.27.1317.741@49.27.1317.741" timestamp="1580572524672" />
     <state x="196" y="32" key="SettingsEditor" timestamp="1578206222413">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1579990575929">
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1580070628746">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1579990575929" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1580070628746" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602879795" />
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1579577187234">
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1581924790112">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1579577187234" />
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1581924790112" />
     <state x="2536" y="366" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577524050035" />
-    <state x="2368" y="161" width="1034" height="770" key="find.popup" timestamp="1580369254308">
-      <screen x="1920" y="0" width="1920" height="1080" />
-    </state>
-    <state x="353" y="133" width="709" height="528" key="find.popup/49.27.1317.741@49.27.1317.741" timestamp="1578222848059" />
-    <state x="2368" y="161" width="1034" height="770" key="find.popup/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1580369254308" />
-    <state x="388" y="191" width="628" height="413" key="git4idea.merge.GitPullDialog" timestamp="1579363341600">
+    <state x="353" y="133" width="709" height="538" key="find.popup" timestamp="1580575551606">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="388" y="191" width="628" height="413" key="git4idea.merge.GitPullDialog/49.27.1317.741@49.27.1317.741" timestamp="1579363341600" />
-    <state x="572" y="294" width="260" height="207" key="publish.login" timestamp="1579363900400">
+    <state x="353" y="133" width="709" height="538" key="find.popup/49.27.1317.741@49.27.1317.741" timestamp="1580575551606" />
+    <state x="434" y="111" width="537" height="572" key="git4idea.branch.GitSmartOperationDialog" timestamp="1580570884743">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="572" y="294" width="260" height="207" key="publish.login/49.27.1317.741@49.27.1317.741" timestamp="1579363900400" />
-    <state x="371" y="176" key="run.anything.popup" timestamp="1578206185577">
+    <state x="434" y="111" width="537" height="572" key="git4idea.branch.GitSmartOperationDialog/49.27.1317.741@49.27.1317.741" timestamp="1580570884743" />
+    <state x="388" y="191" width="628" height="413" key="git4idea.merge.GitPullDialog" timestamp="1582453032302">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="371" y="176" key="run.anything.popup/49.27.1317.741@49.27.1317.741" timestamp="1578206185577" />
+    <state x="388" y="191" width="628" height="413" key="git4idea.merge.GitPullDialog/49.27.1317.741@49.27.1317.741" timestamp="1582453032302" />
+    <state x="572" y="294" width="260" height="207" key="publish.login" timestamp="1582453340042">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="572" y="294" width="260" height="207" key="publish.login/49.27.1317.741@49.27.1317.741" timestamp="1582453340042" />
+    <state x="371" y="176" key="run.anything.popup" timestamp="1580582315756">
+      <screen x="49" y="27" width="1317" height="741" />
+    </state>
+    <state x="371" y="176" key="run.anything.popup/49.27.1317.741@49.27.1317.741" timestamp="1580582315756" />
     <state x="517" y="268" width="370" height="259" key="webDeployment.PermissionsDialog" timestamp="1579385304276">
       <screen x="49" y="27" width="1317" height="741" />
     </state>

@@ -36,7 +36,7 @@ class TelegramBot
     public function sendMessage($chat_id, $text, $reply_markup = '', $parsemode = '', $disablepreview = true)
     {
 
-        $this->query('sendMessage', [
+        return $this->query('sendMessage', [
             'text' => $text,
             'chat_id' => $chat_id,
             'parse_mode' => $parsemode,
@@ -50,6 +50,12 @@ class TelegramBot
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
         return $data;
+    }
+
+    public function getChat($chatid) {
+        return $this->query('getChat', [
+            'chat_id' => $chatid,
+        ]);
     }
 
     public function replyKeyboardMarkup($keyboardarr, $resize_keyboard = true, $one_time_keyboard = false, $selective = false) {
