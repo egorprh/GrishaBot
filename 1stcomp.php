@@ -134,7 +134,7 @@ if ($isstart) {
     $competitorslist = $competitors->fetch_assoc_array();
 
     foreach ($competitorslist as $competitor) {
-        $params['userid'] = 342799025;//TODO Убрать хардкод, поставить $competitor['userid']
+        $params['userid'] = $competitor['userid'];
         $db->query('INSERT INTO ezcash_messagetask SET ?A[?i, "?s", ?i]', $params);
     }
 

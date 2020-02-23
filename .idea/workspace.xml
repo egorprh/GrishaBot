@@ -1,25 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="- фикc">
-      <change afterPath="$PROJECT_DIR$/classes/BotFunctions.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classes/Manage.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sendmessagescript.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/bot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1stcomp.php" beforeDir="false" afterPath="$PROJECT_DIR$/1stcomp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/TelegramBot.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TelegramBot.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/madelineManage.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/madelineManage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fortest.php" beforeDir="false" afterPath="$PROJECT_DIR$/fortest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sendmessagescript.php" beforeDir="false" afterPath="$PROJECT_DIR$/sendmessagescript.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +136,7 @@
       <workItem from="1580570841470" duration="12511000" />
       <workItem from="1580629923746" duration="10687000" />
       <workItem from="1581924285843" duration="517000" />
-      <workItem from="1582453021427" duration="13326000" />
+      <workItem from="1582453021427" duration="14694000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -294,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580070625984</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="- часть функций бота вынесена в отдельный класс&#10;- создан скрипт крона для рассылки пользователям&#10;- для рыссылки записываются данные в отдельную таблицу: юзерид, текст. Крон пробегается оп записям и те которые не отправлены - отправляет&#10;- рефактор">
+      <created>1582493320218</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1582493320218</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +312,8 @@
     <MESSAGE value="Some fix" />
     <MESSAGE value="- фиксы&#10;- добавлена функция получения количества участников" />
     <MESSAGE value="- фикc" />
-    <option name="LAST_COMMIT_MESSAGE" value="- фикc" />
+    <MESSAGE value="- часть функций бота вынесена в отдельный класс&#10;- создан скрипт крона для рассылки пользователям&#10;- для рыссылки записываются данные в отдельную таблицу: юзерид, текст. Крон пробегается оп записям и те которые не отправлены - отправляет&#10;- рефактор" />
+    <option name="LAST_COMMIT_MESSAGE" value="- часть функций бота вынесена в отдельный класс&#10;- создан скрипт крона для рассылки пользователям&#10;- для рыссылки записываются данные в отдельную таблицу: юзерид, текст. Крон пробегается оп записям и те которые не отправлены - отправляет&#10;- рефактор" />
   </component>
   <component name="WindowStateProjectService">
     <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1582453778096">
@@ -333,15 +325,15 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1580578383738">
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1582493319799">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1580578383738" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1582493319799" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602878338" />
-    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1582453050339">
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1582493283651">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog/49.27.1317.741@49.27.1317.741" timestamp="1582453050339" />
+    <state x="149" y="127" width="1117" height="546" key="DiffContextDialog/49.27.1317.741@49.27.1317.741" timestamp="1582493283651" />
     <state x="2663" y="297" width="424" height="484" key="FileChooserDialogImpl" timestamp="1577515766319">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -371,10 +363,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1580070628746">
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1582493323886">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1580070628746" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1582493323886" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602879795" />
     <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1581924790112">
       <screen x="49" y="27" width="1317" height="741" />

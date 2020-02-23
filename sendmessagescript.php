@@ -18,7 +18,11 @@ $countsend = 0;
 
 foreach ($userslist as $item) {
     usleep(150000);
-    $telegramApi->sendMessage($item['userid'], json_decode($item['message']));
+
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    $telegramApi->sendMessage($item['userid'], json_decode($item['message']) . $item['id'], $reply_markup, 'HTML');
+
     $db->query("UPDATE ezcash_messagetask SET issend = ?i  WHERE id = ?i", 1, $item['id']);
     $countsend++;
 }
