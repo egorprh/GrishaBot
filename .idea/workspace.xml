@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="23c1489c-0353-403b-98da-81a537485ad2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sendmessagescript.php" beforeDir="false" afterPath="$PROJECT_DIR$/sendmessagescript.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +135,7 @@
       <workItem from="1580570841470" duration="12511000" />
       <workItem from="1580629923746" duration="10687000" />
       <workItem from="1581924285843" duration="517000" />
-      <workItem from="1582453021427" duration="14694000" />
+      <workItem from="1582453021427" duration="15110000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <created>1576734577497</created>
@@ -285,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1582493320218</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fixes">
+      <created>1582494503044</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1582494503044</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +319,8 @@
     <MESSAGE value="- фиксы&#10;- добавлена функция получения количества участников" />
     <MESSAGE value="- фикc" />
     <MESSAGE value="- часть функций бота вынесена в отдельный класс&#10;- создан скрипт крона для рассылки пользователям&#10;- для рыссылки записываются данные в отдельную таблицу: юзерид, текст. Крон пробегается оп записям и те которые не отправлены - отправляет&#10;- рефактор" />
-    <option name="LAST_COMMIT_MESSAGE" value="- часть функций бота вынесена в отдельный класс&#10;- создан скрипт крона для рассылки пользователям&#10;- для рыссылки записываются данные в отдельную таблицу: юзерид, текст. Крон пробегается оп записям и те которые не отправлены - отправляет&#10;- рефактор" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="430" y="164" width="815" height="526" key="#Deployment" timestamp="1582453778096">
@@ -325,10 +332,10 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="362" y="202" width="680" height="390" key="#com.intellij.fileTypes.FileTypeChooser/49.27.1317.741@49.27.1317.741" timestamp="1578220409068" />
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1582493319799">
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2" timestamp="1582494502853">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1582493319799" />
+    <state x="257" y="42" width="953" height="554" key="CommitChangelistDialog2/49.27.1317.741@49.27.1317.741" timestamp="1582494502853" />
     <state x="2445" y="135" width="860" height="807" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602878338" />
     <state x="149" y="127" width="1117" height="546" key="DiffContextDialog" timestamp="1582493283651">
       <screen x="49" y="27" width="1317" height="741" />
@@ -363,15 +370,15 @@
       <screen x="49" y="27" width="1317" height="741" />
     </state>
     <state x="196" y="32" key="SettingsEditor/49.27.1317.741@49.27.1317.741" timestamp="1578206222413" />
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1582493323886">
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2" timestamp="1582494506352">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1582493323886" />
+    <state x="430" y="216" width="580" height="363" key="Vcs.Push.Dialog.v2/49.27.1317.741@49.27.1317.741" timestamp="1582494506352" />
     <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1579602879795" />
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1581924790112">
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog" timestamp="1582494894431">
       <screen x="49" y="27" width="1317" height="741" />
     </state>
-    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1581924790112" />
+    <state x="411" y="246" key="com.intellij.ide.util.TipDialog/49.27.1317.741@49.27.1317.741" timestamp="1582494894431" />
     <state x="2536" y="366" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1577524050035" />
     <state x="353" y="133" width="709" height="538" key="find.popup" timestamp="1580575551606">
       <screen x="49" y="27" width="1317" height="741" />
