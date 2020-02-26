@@ -65,7 +65,8 @@ if ($isstart) {
 
     $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
-    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_comp2 WHERE userid = ?i)", $userid);
+    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM " . Constants::COMP_TABLE . " WHERE userid = ?i)", $userid);
+
     if (current($issubscribe->fetch_row()) == 0) {
         $params = [
             'userid' => $userid,
@@ -73,7 +74,7 @@ if ($isstart) {
             'conditionscomplete' => 0,
         ];
 
-        $db->query('INSERT INTO ezcash_comp2 SET ?A[?i, ?i, ?i]', $params);
+        $db->query('INSERT INTO ' . Constants::COMP_TABLE . ' SET ?A[?i, ?i, ?i]', $params);
     }
 
     $notsubscribes = [];
@@ -96,14 +97,14 @@ if ($isstart) {
 Итоги будут подведены уже в эти выходные. Мы тебя оповестим и скинем трансляцию розыгрыша.
 
 Удачи!)', $reply_markup);
-        $db->query("UPDATE ezcash_comp2 SET countsubscribes = ?i, conditionscomplete = ?i  WHERE userid = ?i", $countsubscribes, 1, $userid);
+        $db->query("UPDATE " . Constants::COMP_TABLE . " SET countsubscribes = ?i, conditionscomplete = ?i WHERE userid = ?i", $countsubscribes, 1, $userid);
     } else {
         foreach ($ourchannelsurl as $key => $channel) {
             $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
         }
         $links = implode("\n\n", $channelslinks);
 
-        $db->query("UPDATE ezcash_comp2 SET countsubscribes = ?i  WHERE userid = ?i", $countsubscribes, $userid);
+        $db->query("UPDATE " . Constants::COMP_TABLE . " SET countsubscribes = ?i, conditionscomplete = ?i WHERE userid = ?i", $countsubscribes, 0, $userid);
 
         $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
@@ -116,11 +117,13 @@ if ($isstart) {
 }  else if ($newcomp || $compresults) {
 
     if ($newcomp) {
-        $messagetext =  "🤟🏻ЗАВТРА ВСЕ ЗАКОНЧИТСЯ.
+        $messagetext =  "🤟🏻⏰ТЫ ТОЧНО НИЧЕГО НЕ УПУСКАЕШЬ?
 
-Это не шутка. Завтра в 10 утра я перестану принимать заявки в розыгрыш.
+У нас новый розыгрыш подъехал. Жми кнопку «УСЛОВИЯ НЕДЕЛИ» и выигрывай ценные призы.
 
-Осталось 11 часов. Поспеши, если ещё не в теме.";
+Удачи и ещё раз удачи!
+💣Мы запустили новый конкурс!
+🎁Жми 'УСЛОВИЯ НЕДЕЛИ', чтобы забрать свой выигрыш!";
 
     } else if ($compresults) {
         $messagetext = "🎉Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>";
@@ -140,7 +143,7 @@ if ($isstart) {
 
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-    $telegramApi->sendMessage($userid, 'Сообщения будут разосланы всем пользователям в течении 1 часа', $reply_markup);
+    $telegramApi->sendMessage($userid, 'Сообщения будут разосланы всем пользователям в течении 10-15 минут', $reply_markup);
 
 } else if ($feedback) {
 
