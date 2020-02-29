@@ -12,7 +12,7 @@ include('classes/Manage.php');
 $telegramApi = new TelegramBot();
 $db = Manage::set_db_connect();
 
-$nonsended = $db->query("SELECT * FROM ezcash_messagetask WHERE issend = ?i LIMIT 100", 0);
+$nonsended = $db->query("SELECT * FROM ezcash_messagetask WHERE issend = ?i LIMIT 150", 0);
 $userslist = $nonsended->fetch_assoc_array();
 $countsend = 0;
 
