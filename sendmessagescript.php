@@ -19,6 +19,8 @@ $countsend = 0;
 foreach ($userslist as $item) {
     usleep(150000);
 
+    //TODO Ставть 2 если сообщение недоставлено, т.е. метод сендмессадж вернул фолс
+
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
     $telegramApi->sendMessage($item['userid'], json_decode($item['message']), $reply_markup, 'HTML');

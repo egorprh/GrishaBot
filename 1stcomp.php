@@ -34,10 +34,9 @@ $pressrecalls = strstr($text, 'ОТЗЫВЫ');
 $iamsubcribe = strstr($text, 'ПОДПИСАЛСЯ');
 $feedback = strstr($text, 'ОБРАТНАЯ СВЯЗЬ');
 $userquestion = strstr($text, 'опрос');
+$mailing = strstr($text, 'Рассылка');
 
 $getcompresults = strstr($text, 'даймнесписокучастников-пароль');
-$newcomp = strstr($text, 'отправьуведомленияоновомконкурсе-пароль');
-$compresults = strstr($text, 'отправьуведомленияоготовностирезультатов-пароль');
 $viewcountmembers = strstr($text, 'скольконародавботе-пароль');
 
 if ($isstart) {
@@ -114,38 +113,7 @@ if ($isstart) {
         $telegramApi->sendMessage($userid, $message, $reply_markup, 'HTML');
     }
 
-}  else if ($newcomp || $compresults) {
-
-    if ($newcomp) {
-        $messagetext =  "🤟🏻⏰ТЫ ТОЧНО НИЧЕГО НЕ УПУСКАЕШЬ?
-
-У нас новый розыгрыш подъехал. Жми кнопку «УСЛОВИЯ НЕДЕЛИ» и выигрывай ценные призы.
-
-Удачи и ещё раз удачи!
-💣Мы запустили новый конкурс!
-🎁Жми 'УСЛОВИЯ НЕДЕЛИ', чтобы забрать свой выигрыш!";
-
-    } else if ($compresults) {
-        $messagetext = "🎉Мы подвели итоги конкурса, результат смотри здесь: <a href=\"t.me/EZCashOtzivi\">Отзывы EZCash</a>";
-    }
-
-    $params['issend'] = 0;
-    $params['message'] = json_encode($messagetext);
-
-    $sql = "SELECT userid FROM ezcash_userdata";
-    $competitors = $db->query($sql);
-    $competitorslist = $competitors->fetch_assoc_array();
-
-    foreach ($competitorslist as $competitor) {
-        $params['userid'] = $competitor['userid'];
-        $db->query('INSERT INTO ezcash_messagetask SET ?A[?i, "?s", ?i]', $params);
-    }
-
-    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
-    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-    $telegramApi->sendMessage($userid, 'Сообщения будут разосланы всем пользователям в течении 10-15 минут', $reply_markup);
-
-} else if ($feedback) {
+}  else if ($feedback) {
 
     BotFunctions::feedback($telegramApi, $userid);
 
@@ -169,7 +137,15 @@ if ($isstart) {
 
     BotFunctions::get_comp_results($telegramApi, $userid, $db);
 
-} else {
+} else if ($mailing) {
+
+    BotFunctions::mailing($db, $userid, $text);
+
+    $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    $telegramApi->sendMessage($userid, 'Сообщения будут разосланы всем пользователям в течении 10-15 минут', $reply_markup);
+
+}else {
 
     if (!empty($userid)) {
         $telegramApi->sendMessage($userid, "🤖 Дружище, я не понимаю о чём ты.

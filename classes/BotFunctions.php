@@ -46,6 +46,25 @@ class BotFunctions
         }
     }
 
+    static function mailing($db, $userid, $text)
+    {
+        if (self::is_admin($userid)) {
+            $messagetext = str_replace('Рассылка: ', '', $text);
+
+            $params['issend'] = 0;
+            $params['message'] = json_encode($messagetext);
+
+            $sql = "SELECT userid FROM ezcash_userdata";
+            $competitors = $db->query($sql);
+            $competitorslist = $competitors->fetch_assoc_array();
+
+            foreach ($competitorslist as $competitor) {
+                $params['userid'] = $competitor['userid'];
+                $db->query('INSERT INTO ezcash_messagetask SET ?A[?i, "?s", ?i]', $params);
+            }
+        }
+    }
+
     static function get_comp_results($telegramApi, $userid, $db)
     {
         $telegramApi->sendMessage($userid, "Ща, соберу всех в кучу");
@@ -99,11 +118,17 @@ class BotFunctions
 //    }
 //    $links = implode(', ', $channelslinks);
 
-        $messagetext = Constants::CONDITIONS_TEXT;
+        //$messagetext = Constants::CONDITIONS_TEXT;
+        $messagetext = Constants::WAIT_RESULT_TEXT;
 
         $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
         $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
+    }
+
+    static function is_admin($userid)
+    {
+        return in_array($userid, Constants::ADMINS);
     }
 
 }
