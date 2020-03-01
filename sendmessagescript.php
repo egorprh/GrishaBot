@@ -16,16 +16,21 @@ $nonsended = $db->query("SELECT * FROM ezcash_messagetask WHERE issend = ?i LIMI
 $userslist = $nonsended->fetch_assoc_array();
 $countsend = 0;
 
+//TODO Отдельная таблица с тасками
+
 foreach ($userslist as $item) {
     usleep(150000);
 
-    //TODO Ставть 2 если сообщение недоставлено, т.е. метод сендмессадж вернул фолс
-
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-    $telegramApi->sendMessage($item['userid'], json_decode($item['message']), $reply_markup, 'HTML');
+    $sendresult = $telegramApi->sendMessage($item['userid'], json_decode($item['message']), $reply_markup, 'HTML');
 
-    $db->query("UPDATE ezcash_messagetask SET issend = ?i  WHERE id = ?i", 1, $item['id']);
+    $sendstatus = 1;//Отправлено
+    if ($sendresult == false) {
+        $sendstatus = 2;//Не отправлено
+    }
+
+    $db->query("UPDATE ezcash_messagetask SET issend = ?i  WHERE id = ?i", $sendstatus, $item['id']);
     $countsend++;
 }
 

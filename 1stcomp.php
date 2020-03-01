@@ -35,6 +35,7 @@ $iamsubcribe = strstr($text, 'ПОДПИСАЛСЯ');
 $feedback = strstr($text, 'ОБРАТНАЯ СВЯЗЬ');
 $userquestion = strstr($text, 'опрос');
 $mailing = strstr($text, 'Рассылка');
+$testmod = strstr($text, 'Тест1');
 
 $getcompresults = strstr($text, 'даймнесписокучастников-пароль');
 $viewcountmembers = strstr($text, 'скольконародавботе-пароль');
@@ -145,7 +146,16 @@ if ($isstart) {
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
     $telegramApi->sendMessage($userid, 'Сообщения будут разосланы всем пользователям в течении 10-15 минут', $reply_markup);
 
-}else {
+} else if ($testmod) {
+    if (BotFunctions::is_admin($userid)) {
+        //Здесь место для быстрого тестирования
+        $sendresult = $telegramApi->sendMessage(1100510190, $text);
+        if ($sendresult == false) {
+            $telegramApi->sendMessage($userid, 'Не отправлено');
+        }
+        $telegramApi->sendMessage($userid, json_encode($sendresult));
+    }
+} else {
 
     if (!empty($userid)) {
         $telegramApi->sendMessage($userid, "🤖 Дружище, я не понимаю о чём ты.
