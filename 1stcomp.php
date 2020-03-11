@@ -29,10 +29,10 @@ $firstname = $message["message"]["from"]["first_name"] ?: '';
 $textarr = explode(' ', $text);
 $isstart = in_array('/start', $textarr);
 
-$pressweekrules = strstr($text, 'УСЛОВИЯ');
-$pressrecalls = strstr($text, 'ОТЗЫВЫ');
-$iamsubcribe = strstr($text, 'ПОДПИСАЛСЯ');
-$feedback = strstr($text, 'ОБРАТНАЯ СВЯЗЬ');
+$pressweekrules = strstr($text, '📃УСЛОВИЯ НЕДЕЛИ');
+$pressrecalls = strstr($text, '👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ');
+$iamsubcribe = strstr($text, '✅Я ПОДПИСАЛСЯ');
+$feedback = strstr($text, '📪ОБРАТНАЯ СВЯЗЬ');
 $userquestion = strstr($text, 'опрос');
 $mailing = strstr($text, 'Рассылка');
 $testmod = strstr($text, 'Тест1');
