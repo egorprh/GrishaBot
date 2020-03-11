@@ -70,11 +70,12 @@ if ($isstart) {
     if (current($issubscribe->fetch_row()) == 0) {
         $params = [
             'userid' => $userid,
+            'username' => $username,
             'countsubscribes' => 0,
             'conditionscomplete' => 0,
         ];
 
-        $db->query('INSERT INTO ' . Constants::COMP_TABLE . ' SET ?A[?i, ?i, ?i]', $params);
+        $db->query('INSERT INTO ' . Constants::COMP_TABLE . ' SET ?A[?i, "?s", ?i, ?i]', $params);
     }
 
     $notsubscribes = [];

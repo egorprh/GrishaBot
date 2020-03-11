@@ -69,9 +69,8 @@ class BotFunctions
     {
         $telegramApi->sendMessage($userid, "Ща, соберу всех в кучу");
 
-        $sql = "SELECT DISTINCT u.username FROM ezcash_userdata u 
-            LEFT JOIN " . Constants::COMP_TABLE . " comp1 ON comp1.userid = u.userid
-            WHERE comp1.conditionscomplete = 1";
+        $sql = "SELECT DISTINCT comp.username FROM " . Constants::COMP_TABLE . " comp
+                WHERE comp.conditionscomplete = 1";
         $competitors = $db->query($sql);
         $competitorslist = $competitors->fetch_row_array();
 
@@ -118,8 +117,8 @@ class BotFunctions
 //    }
 //    $links = implode(', ', $channelslinks);
 
-        //$messagetext = Constants::CONDITIONS_TEXT;
-        $messagetext = Constants::WAIT_RESULT_TEXT;
+        $messagetext = Constants::CONDITIONS_TEXT;
+        //$messagetext = Constants::WAIT_RESULT_TEXT;
 
         $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
