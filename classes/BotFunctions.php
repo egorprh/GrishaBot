@@ -29,7 +29,7 @@ class BotFunctions
         $countmembers = $db->query($sql);
         $countmembers = $countmembers->fetch_row();
 
-        $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+        $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
 
         $telegramApi->sendMessage($userid, current($countmembers), $reply_markup);
