@@ -117,8 +117,8 @@ class BotFunctions
 //    }
 //    $links = implode(', ', $channelslinks);
 
-        $messagetext = Constants::CONDITIONS_TEXT;
-        //$messagetext = Constants::WAIT_RESULT_TEXT;
+        //$messagetext = Constants::CONDITIONS_TEXT;
+        $messagetext = Constants::WAIT_RESULT_TEXT;
 
         $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
@@ -129,5 +129,16 @@ class BotFunctions
     {
         return in_array($userid, Constants::ADMINS);
     }
+
+    static function referal_link()
+    {
+        // 1. Чувак жмёт условия
+        // 2. Проверяем если для этого чувака токен реферальный
+        // 3. Если есть берем его
+        // 4. Если нет, то формируем новый и записываем его в конкурсную таблицу
+        // 5. формируем ссылку
+    }
+
+    //TODO Метод который будет возвращать количество приглашенных
 
 }

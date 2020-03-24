@@ -61,6 +61,11 @@ if ($isstart) {
         $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i]', $params);
     }
 
+    //TODO Запись в конкурсную таблицу.
+    // Вытаскивать реферальный токен из ссылки
+    // Добавить поля: selftoken, referertoken, refererid, dudescount
+    // Проверять набралось ли у рефферера нужное количество рефералов и если да отправлять ему смс
+
 }  else if ($iamsubcribe) {
 
     $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
