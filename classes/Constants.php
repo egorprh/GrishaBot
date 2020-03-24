@@ -16,15 +16,15 @@ class Constants {
 //    const CHANNELS_URL = ['https://t.me/joinchat/AAAAAFi6PGpSUNn2_i87rg'];
 //    const CHANNELS_NAME = ['Вруби Рубильник'];
 
-    const CHANNELS = ['-1001124997660', '-1001245562169', '-1001199710064'];
+    const CHANNELS = ['-1001492513386', '-1001133805749', '-1001452446183'];
     const CHANNELS_URL = [
-        'https://t.me/joinchat/AAAAAEMOGhyp0D58GGTWuQ',
-        'https://t.me/joinchat/AAAAAEo9xTkWC82-1bOT4Q',
-        'https://t.me/joinchat/AAAAAEeCH3A9soE_5YbZhQ'
+        'https://t.me/joinchat/AAAAAFj18mrHzZ2HAJogsg',
+        'https://t.me/joinchat/AAAAAEOUgLXgFJN6leDmtw',
+        'https://t.me/joinchat/AAAAAFaSkedzKASUo0mAZQ'
     ];
-    const CHANNELS_NAME = ['СХЕМЫ ЗАРАБОТКА', 'ЩЕДРЫЙ КИТАЕЦ', 'Я ЖЕ НЕ БИЗНЕСМЕН'];
+    const CHANNELS_NAME = ['Money Code', 'Your Free', 'Evil Money'];
 
-    const COMP_TABLE = 'ezcash_comp5';
+    const COMP_TABLE = 'ezcash_comp6';
 
     const ADMINS = [342799025, 377226192];
 
@@ -44,23 +44,41 @@ class Constants {
 
 Все просто. Дерзай!';
 
-    const CONDITIONS_TEXT = "⏰ПОРА ДЕЙСТВОВАТЬ!
+//    const CONDITIONS_TEXT = "⏰ПОРА ДЕЙСТВОВАТЬ!
+//
+//На этой неделе у нас новые спонсоры и новые условия.
+//
+//Оформляем подписку на интересные каналы:
+//
+//1️⃣ <a href=\"https://t.me/joinchat/AAAAAEMOGhyp0D58GGTWuQ\">СХЕМЫ ЗАРАБОТКА</a> - абузы, денежные темы и немного халявы.
+//2️⃣ <a href=\"https://t.me/joinchat/AAAAAEo9xTkWC82-1bOT4Q\">️⃣ЩЕДРЫЙ КИТАЕЦ</a> - кайфовые и необычные штуки с Алика по супер низким ценам.
+//3️⃣ <a href=\"https://t.me/joinchat/AAAAAEeCH3A9soE_5YbZhQ\">Я ЖЕ НЕ БИЗНЕСМЕН</a> - необычные новости из мира бизнеса и бесплатные схемы.
+//
+//✅Подписываемся на 3 канала, жмём ниже кнопку «Я ПОДПИСАЛСЯ» и ждём результатов розыгрыша.
+//
+//3 приза по 3к рублей на карту и ещё 3 плюшки в виде подписки на онлайн кинотеатры без рекламы.
+//
+//Участников пока немного, поэтому дерзайте. Итоги подведём в воскресенье 22 марта.
+//
+//Всех благ, обнял!)";
 
-На этой неделе у нас новые спонсоры и новые условия.
+    const CONDITIONS_TEXT = '⏰⏰ВОЗЬМИ СВОЁ!
+
+На этой неделе у нас новые спонсоры и новые условия с крутыми призами.
 
 Оформляем подписку на интересные каналы:
 
-1️⃣ <a href=\"https://t.me/joinchat/AAAAAEMOGhyp0D58GGTWuQ\">СХЕМЫ ЗАРАБОТКА</a> - абузы, денежные темы и немного халявы.
-2️⃣ <a href=\"https://t.me/joinchat/AAAAAEo9xTkWC82-1bOT4Q\">️⃣ЩЕДРЫЙ КИТАЕЦ</a> - кайфовые и необычные штуки с Алика по супер низким ценам.
-3️⃣ <a href=\"https://t.me/joinchat/AAAAAEeCH3A9soE_5YbZhQ\">Я ЖЕ НЕ БИЗНЕСМЕН</a> - необычные новости из мира бизнеса и бесплатные схемы.
+1️⃣ <a href="https://t.me/joinchat/AAAAAFj18mrHzZ2HAJogsg">Money Code</a> - легкие схемы, быстрые деньги.
+2️⃣ <a href="https://t.me/joinchat/AAAAAEOUgLXgFJN6leDmtw">Your Free</a> - самая натуральная ХАЛЯВА. Все бесплатно.
+3️⃣ <a href="https://t.me/joinchat/AAAAAFaSkedzKASUo0mAZQ">Evil Money</a> - денежные дропы и легкие раздачи денег.
 
 ✅Подписываемся на 3 канала, жмём ниже кнопку «Я ПОДПИСАЛСЯ» и ждём результатов розыгрыша.
 
-3 приза по 3к рублей на карту и ещё 3 плюшки в виде подписки на онлайн кинотеатры без рекламы.
+3 приза по 4к рублей на карту и ещё 3 плюшки в виде быстрой схемы заработка.
 
-Участников пока немного, поэтому дерзайте. Итоги подведём в воскресенье 22 марта.
+Участников пока немного, поэтому дерзайте. Итоги подведём в воскресенье 29 марта.
 
-Всех благ, обнял!)";
+Всех благ, обнял!)';
 
     const WAIT_RESULT_TEXT = "⏰На этой неделе участников больше не принимаем.
 
