@@ -117,12 +117,12 @@ class BotFunctions
 //    }
 //    $links = implode(', ', $channelslinks);
 
-        $messagetext = Constants::CONDITIONS_TEXT;
-        //$messagetext = Constants::WAIT_RESULT_TEXT;
+        //$messagetext = Constants::CONDITIONS_TEXT;
+        $messagetext = Constants::WAIT_RESULT_TEXT;
 
-        $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+        $keyboard = [/*["✅Я ПОДПИСАЛСЯ"],*/["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-        $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
+        $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML', false);
     }
 
     static function is_admin($userid)
