@@ -9,6 +9,9 @@ include 'Constants.php';
 
 class madelineManage
 {
+    static function test() {
+        return 'itWork';
+    }
 
     public static function connect()
     {
@@ -29,7 +32,7 @@ class madelineManage
         return $userschatinfo["participants"];
     }
 
-    public static function get_participant($channel, $userid)
+    static function get_participant($channel, $userid)
     {
         $MadelineProto = self::connect();
         $MadelineProto->start();
@@ -37,9 +40,11 @@ class madelineManage
         try {
             $data = $MadelineProto->channels->getParticipant(['channel' => $channel, 'user_id' => $userid]);
         } catch (\danog\MadelineProto\RPCErrorException $e) {
-            \danog\MadelineProto\Logger::log((string) $e, \danog\MadelineProto\Logger::FATAL_ERROR);
+            \danog\MadelineProto\Logger::log((string)$e, \danog\MadelineProto\Logger::FATAL_ERROR);
+            return false;
         } catch (\danog\MadelineProto\Exception $e) {
-            \danog\MadelineProto\Logger::log((string) $e, \danog\MadelineProto\Logger::FATAL_ERROR);
+            \danog\MadelineProto\Logger::log((string)$e, \danog\MadelineProto\Logger::FATAL_ERROR);
+            return false;
         }
 
         return !empty($data) ? $data : [];

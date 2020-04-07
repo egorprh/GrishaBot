@@ -102,25 +102,34 @@ class BotFunctions
         $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
 
         //Это просто пример инлайновой клавиатуры
-//    $inline_button1 = ["text" => "👍🏻ОТЗЫВЫ", "url" => 't.me/telesig'];
-//    $inline_keyboard = [[$inline_button1]];
-//    $keyboard = ["inline_keyboard"=>$inline_keyboard];
-//    $replyMarkup = json_encode($keyboard);
-//
-//    $telegramApi->sendMessage($userid, '👇🏻👇🏻👇🏻', $replyMarkup);
+        //$inline_button1 = ["text" => "👍🏻ОТЗЫВЫ", "url" => 't.me/telesig'];
+        //$inline_keyboard = [[$inline_button1]];
+        //$keyboard = ["inline_keyboard"=>$inline_keyboard];
+        //$replyMarkup = json_encode($keyboard);
+        //$telegramApi->sendMessage($userid, '👇🏻👇🏻👇🏻', $replyMarkup);
     }
 
-    static function press_week_rules($telegramApi, $userid)
+    static function press_week_rules($db, $telegramApi, $userid)
     {
-        //    foreach ($ourchannels as $channel) {
-//        $channelslinks[] = 't.me/' . $channel;
-//    }
-//    $links = implode(', ', $channelslinks);
+        //foreach ($ourchannels as $channel) {
+        //$channelslinks[] = 't.me/' . $channel;
+        //}
+        //$links = implode(', ', $channelslinks);
 
-        //$messagetext = Constants::CONDITIONS_TEXT;
+        //Формируем реферальную ссылку для пользователя
+        $me = $telegramApi->query('getMe');
+        $botname = $me->result->username;
+        $record = $db->query("SELECT * FROM ezcash_userdata WHERE userid = ?i", $userid);
+        $record = $record->fetch_assoc_array()[0];
+
+        $referallurl = 'https://telegram.me/' . $botname . '?start=' . $record['refcode'];
+
+        $messagetext = Constants::CONDITIONS_TEXT;
+        $messagetext .= "\n\nИ пригласи " . Constants::COUNT_SUBSCRIBERS  . " друзей по этой ссылке: \n" . $referallurl;
+
         $messagetext = Constants::WAIT_RESULT_TEXT;
 
-        $keyboard = [/*["✅Я ПОДПИСАЛСЯ"],*/["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+        $keyboard = [/*["✅Я ПОДПИСАЛСЯ"],*/ ["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
         $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML', false);
     }
@@ -129,16 +138,46 @@ class BotFunctions
     {
         return in_array($userid, Constants::ADMINS);
     }
-
-    static function referal_link()
+    
+    static function update_comp_record($db, $params, $userid)
     {
-        // 1. Чувак жмёт условия
-        // 2. Проверяем если для этого чувака токен реферальный
-        // 3. Если есть берем его
-        // 4. Если нет, то формируем новый и записываем его в конкурсную таблицу
-        // 5. формируем ссылку
-    }
+        $params['userid'] = $userid;
 
-    //TODO Метод который будет возвращать количество приглашенных
+        //Делаем строку SET для запроса
+        $setstrarr = [];
+        foreach ($params as $key => $param) {
+            switch (gettype($param)) {
+                case 'integer':
+                    $setstrarr[] = '?i';
+                    break;
+                case 'string':
+                    $setstrarr[] = '"?s"';
+                    break;
+                default:
+                    $param[$key] = json_encode($param);
+                    $setstrarr[] = '"?s"';
+                    break;
+            }
+        }
+        $setstr = implode(', ', $setstrarr);
+
+        //Проверяем есть ли запись для этого юзера
+        $record = $db->query("SELECT * FROM " . Constants::COMP_TABLE . " WHERE userid = ?i", $userid);
+        $record = $record->fetch_assoc_array()[0];
+
+        //Если нет, то добавляем
+        if (empty($record)) {
+            $db->query('INSERT INTO ' . Constants::COMP_TABLE . ' SET ?A[' . $setstr . ']', $params);
+        }
+        //Если есть, то обновляем
+        else {
+            $db->query('UPDATE ' . Constants::COMP_TABLE . ' SET ?A[' . $setstr . '] WHERE id = ?i', $params, $record['id']);
+        }
+
+        $record2 = $db->query("SELECT * FROM " . Constants::COMP_TABLE . " WHERE userid = ?i", $userid);
+        $record2 = $record2->fetch_assoc_array()[0];
+
+        return $record2;
+    }
 
 }

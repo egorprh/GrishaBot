@@ -40,87 +40,136 @@ $testmod = strstr($text, 'Тест1');
 $getcompresults = strstr($text, 'даймнесписокучастников-пароль');
 $viewcountmembers = strstr($text, 'скольконародавботе-пароль');
 
+//Отладочный режим
+//if (!BotFunctions::is_admin($userid)) {
+//    $telegramApi->sendMessage($userid, 'Ведутся технические работы, приходите позже');
+//} else {
 if ($isstart) {
 
-    $welcomemessage = Constants::WELCOME_MESSAGE;
     $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
     $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
 
-    $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup, 'HTML');
-
+    //Проверяем подписан ли чувак
     $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM ezcash_userdata WHERE userid = ?i)", $userid);
+
     if (current($issubscribe->fetch_row()) == 0) {
+        $welcomemessage = Constants::WELCOME_MESSAGE;
+        $telegramApi->sendMessage($userid, $welcomemessage, $reply_markup, 'HTML');
+
+        switch (count($textarr)) {
+            case 2:
+                //Получаем токен того, кто пригласил
+                $referrertoken = $textarr[1];
+                //По токену получаем самого реферрера
+                $referrer = $db->query("SELECT * FROM ezcash_userdata WHERE refcode = '?s'", $referrertoken);
+                $referrer = $referrer->fetch_assoc_array()[0];
+                // Отправляем ему смс, что по его ссылке перешёл пользователь
+                $referallmessage = "По вашей ссылке пришел пользователь @" . $username;
+                $telegramApi->sendMessage($referrer['userid'], $referallmessage, $reply_markup, 'HTML');
+
+                //Обновляем запись в КОНКУРСНОЙ таблице, что +1 реферал
+                $countsubscribers = $referrer['countsubscribers'] + 1;
+                $referrercomprecord = BotFunctions::update_comp_record($db, ['username' => $referrer['username'], 'countsubscribers' => $countsubscribers], $referrer['userid']);
+                //Проверяем выполнил ли реферер все условия конкурса и если да, то говорим ему что он красавчик
+                //Т.е. если он набрал нужное количество рефераллов, подписок и нет отметки о том что он всё выполнил
+                if ($countsubscribers == Constants::COUNT_SUBSCRIBERS &&
+                    $referrercomprecord['countsubscriptions'] >= Constants::COUNT_SUBSCRIPTIONS &&
+                    $referrercomprecord['conditionscomplete'] == 0
+                ) {
+                    $telegramApi->sendMessage($referrer['userid'], Constants::SUCCESS_MESSAGE, $reply_markup);
+                    $referrercomprecord = BotFunctions::update_comp_record($db, ['conditionscomplete' => 1], $referrer['userid']);
+                }
+
+                break;
+            case 1:
+                //Если токена в ссылке не было, то значит пригласил админ
+                $referertoken = 0;
+                $referrer = 0;
+                break;
+        }
+
+        // Генерируем чуваку собственный рефков
+        $refcode = substr(md5(microtime()), rand(0, 26), 10);
+
+        //Записываем чувака в основную базу
         $params = [
             'userid' => $userid,
             'firstname' => $firstname,
             'username' => $username,
             'langcode' => $langcode,
-            'timecreated' => time()
+            'timecreated' => time(),
+            'refcode' => $refcode,
+            'referrerid' => !empty($referrer['id']) ? $referrer['id'] : 0
         ];
-
-        $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i]', $params);
+        $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i, "?s", ?i]', $params);
+    } else {
+        $telegramApi->sendMessage($userid, 'Ты уже стартовал, хитрец.)');
     }
 
-    //TODO Запись в конкурсную таблицу.
-    // Вытаскивать реферальный токен из ссылки
-    // Добавить поля: selftoken, referertoken, refererid, dudescount
-    // Проверять набралось ли у рефферера нужное количество рефералов и если да отправлять ему смс
+} else if ($iamsubcribe) {
 
-}  else if ($iamsubcribe) {
+    //Получаем конкурсную запись
+    $comprecord = BotFunctions::update_comp_record($db, ['username' => $username], $userid);
 
     $telegramApi->sendMessage($userid, '⌛ Ща проверим, одну минуту...');
 
-    $issubscribe = $db->query("SELECT EXISTS(SELECT * FROM " . Constants::COMP_TABLE . " WHERE userid = ?i)", $userid);
-
-    if (current($issubscribe->fetch_row()) == 0) {
-        $params = [
-            'userid' => $userid,
-            'username' => $username,
-            'countsubscribes' => 0,
-            'conditionscomplete' => 0,
-        ];
-
-        $db->query('INSERT INTO ' . Constants::COMP_TABLE . ' SET ?A[?i, "?s", ?i, ?i]', $params);
-    }
-
     $notsubscribes = [];
-    $countsubscribes = 0;
+    $countsubscriptions = 0;
 
+    //Проверяем подписался ли он на все каналы
     foreach ($ourchannels as $key => $ourchannel) {
         //Сюда надо передавать название канала из ссылки t.me/channelname или channel id, и нужны права админа иначе ничего не вернет
         $ispartisipant = madelineManage::get_participant($ourchannel, $userid);
         if (!empty($ispartisipant)) {
-            $countsubscribes++;
+            $countsubscriptions++;
             unset($ourchannelsurl[$key]);//убираем чтобы сообщение показать с неподписанными каналами
         }
     }
 
-    if ($countsubscribes == count(Constants::CHANNELS)) {
-        $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
-        $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-        $telegramApi->sendMessage($userid, '🙏🏻 Дай пять. Ты теперь полноценный участник конкурса.
+    $allsubscribe = ($countsubscriptions == Constants::COUNT_SUBSCRIPTIONS); // На все ли каналы подписался
+    $allinvite = ($comprecord['countsubscribers'] == Constants::COUNT_SUBSCRIBERS); // Пригласил ли необходимое количество человек
 
-Итоги будут подведены уже в эти выходные. Мы тебя оповестим и скинем трансляцию розыгрыша.
-
-Удачи!)', $reply_markup);
-        $db->query("UPDATE " . Constants::COMP_TABLE . " SET countsubscribes = ?i, conditionscomplete = ?i WHERE userid = ?i", $countsubscribes, 1, $userid);
-    } else {
-        foreach ($ourchannelsurl as $key => $channel) {
-            $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
-        }
-        $links = implode("\n\n", $channelslinks);
-
-        $db->query("UPDATE " . Constants::COMP_TABLE . " SET countsubscribes = ?i, conditionscomplete = ?i WHERE userid = ?i", $countsubscribes, 0, $userid);
-
-        $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
-        $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-
-        $message = "😱Ты не доделал. Тебе еще нужно подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
-
-        $telegramApi->sendMessage($userid, $message, $reply_markup, 'HTML');
+    $params['conditionscomplete'] = 0;
+    $keyboard = [["✅Я ПОДПИСАЛСЯ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+    switch (true) {
+        // Если всё сделал: формируем сообщение об успехе и обновляем данные в таблице
+        case ($allsubscribe && $allinvite):
+            $message = Constants::SUCCESS_MESSAGE;
+            $params['conditionscomplete'] = 1;
+            $params['countsubscriptions'] = $countsubscriptions;
+            $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+            break;
+        // Если подписался, но не всех пригласил
+        case ($allsubscribe && !$allinvite):
+            $message = '🙏🏻 Дай пять! Ты подписался на все каналы. Теперь тебе осталось пригласить ' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . ' братюнь.';
+            $params['countsubscriptions'] = $countsubscriptions;
+            $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+            break;
+        // Если всех пригласил, но не на всё подписался
+        case ($allinvite && !$allsubscribe):
+            foreach ($ourchannelsurl as $key => $channel) {
+                $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
+            }
+            $links = implode("\n\n", $channelslinks);
+            $params['countsubscriptions'] = $countsubscriptions;
+            $message = "😱Ты не доделал. Тебе еще нужно подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
+            break;
+        // Если не пригласил и не подписался
+        case (!$allsubscribe && !$allinvite):
+            foreach ($ourchannelsurl as $key => $channel) {
+                $channelslinks[] = '➡ <a href="' . $channel . '">' . $ourchannelsname[$key] . '</a>';
+            }
+            $links = implode("\n\n", $channelslinks);
+            $params['countsubscriptions'] = $countsubscriptions;
+            $message = 'Тебе надо ещё пригласить ' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . " братюнь и подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
+            break;
     }
 
-}  else if ($feedback) {
+    $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
+    BotFunctions::update_comp_record($db, $params, $userid);
+    $telegramApi->sendMessage($userid, $message, $reply_markup, 'HTML');
+
+} else if ($feedback) {
 
     BotFunctions::feedback($telegramApi, $userid);
 
@@ -130,7 +179,7 @@ if ($isstart) {
 
 } else if ($pressweekrules) {
 
-    BotFunctions::press_week_rules($telegramApi, $userid);
+    BotFunctions::press_week_rules($db, $telegramApi, $userid);
 
 } else if ($viewcountmembers) {
 
@@ -174,6 +223,13 @@ if ($isstart) {
     }
 
 }
+
+//Если нет ника у пользователя, то надо ему об этом сказать
+if (empty($username)) {
+    $usernamemessage = 'У тебя не установлен НикНейм в Телеграмме. Зайди в настройки и установи его. Иначе ты не сможешь учавствовать в конкурсах.';
+    $telegramApi->sendMessage($userid, $usernamemessage);
+}
+//}
 
 
 
