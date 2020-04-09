@@ -13,13 +13,29 @@ include('classes/Manage.php');
 include('classes/BotFunctions.php');
 include('classes/madelineManage.php');
 
-//use Krugozor\Database\Mysql\Mysql as Mysql;
-//
-//$db = Mysql::create(Constants::DB_SERVER, Constants::DB_USERNAME, Constants::DB_PASSWORD)
-//    // Выбор базы данных
-//    ->setDatabaseName(Constants::DB_NAME)
-//    // Выбор кодировки
-//    ->setCharset("utf8");
+use Krugozor\Database\Mysql\Mysql as Mysql;
+
+$db = Mysql::create(Constants::DB_SERVER, Constants::DB_USERNAME, Constants::DB_PASSWORD)
+    // Выбор базы данных
+    ->setDatabaseName(Constants::DB_NAME)
+    // Выбор кодировки
+    ->setCharset("utf8");
+
+$message = 'Это ссылка {link}';
+$default = '{link}';
+$replace = 'http==9';
+
+str_replace($default, $replace, $message);
+
+echo '<pre>';
+echo 'Path: ' . __FILE__ . '<br>';
+echo 'Line: ' . __LINE__ . '<br>';
+var_dump(
+    BotFunctions::is_referrals_complete($db, 342799025)
+);
+echo '</pre>';
+die;
+
 //
 //$sql = "SELECT userid FROM ezcash_send1 WHERE issend = 0";
 //$competitors = $db->query($sql);
@@ -29,25 +45,25 @@ include('classes/madelineManage.php');
 //    $usersarr[] = current($item);
 //}
 
-$db = Manage::set_db_connect();
-
-$records = $db->query("SELECT id FROM ezcash_userdata");
-
+//$db = Manage::set_db_connect();
+//
+//$records = $db->query("SELECT id FROM ezcash_userdata");
+//
 //foreach ($records->fetch_assoc_array() as $item) {
 //    $refcode = substr(md5(microtime()), rand(0, 26), 10);
 //    $db->query('UPDATE ezcash_userdata SET refcode = "?s" WHERE id = ?i', $refcode, current($item));
 //}
 
-
-    echo '<pre>';
-    echo 'Path: ' . __FILE__ . '<br>';
-    echo 'Line: ' . __LINE__ . '<br>';
-    var_dump(
-        madelineManage::get_participant(-1001488600170, 342799025)
-
-    );
-    echo '</pre>';
-    die;
+//
+//    echo '<pre>';
+//    echo 'Path: ' . __FILE__ . '<br>';
+//    echo 'Line: ' . __LINE__ . '<br>';
+//    var_dump(
+//        madelineManage::get_participant(-1001488600170, 342799025)
+//
+//    );
+//    echo '</pre>';
+//    die;
 
     //$MadelineProto->channels->getParticipant(['channel' => -1001492513386, 'user_id' => 342799025])
 

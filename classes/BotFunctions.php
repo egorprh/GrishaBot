@@ -124,14 +124,16 @@ class BotFunctions
 
         $referallurl = 'https://telegram.me/' . $botname . '?start=' . $record['refcode'];
 
-        $messagetext = Constants::CONDITIONS_TEXT;
-        $messagetext .= "\n\nИ пригласи " . Constants::COUNT_SUBSCRIBERS  . " друзей по этой ссылке: \n" . $referallurl;
+        $text = Constants::CONDITIONS_TEXT;
+        $default = '{reflink}';
+        $replace = $referallurl;
+        $messagetext = str_replace($default, $replace, $text);
 
-        $messagetext = Constants::WAIT_RESULT_TEXT;
+        //$messagetext = Constants::WAIT_RESULT_TEXT;
 
-        $keyboard = [/*["✅Я ПОДПИСАЛСЯ"],*/ ["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
+        $keyboard = [["✅Я ПОДПИСАЛСЯ"], /*["📃УСЛОВИЯ НЕДЕЛИ"],*/ ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
         $reply_markup = $telegramApi->replyKeyboardMarkup($keyboard);
-        $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML', false);
+        $telegramApi->sendMessage($userid, $messagetext, $reply_markup, 'HTML');
     }
 
     static function is_admin($userid)
@@ -180,4 +182,51 @@ class BotFunctions
         return $record2;
     }
 
+    static function is_referrals_complete($db, $referrerid)
+    {
+        //1. Получаем рефералов чувака
+        $referrals = $db->query("SELECT * FROM " . Constants::COMP_TABLE . " comp 
+                                 LEFT JOIN ezcash_userdata usdata ON usdata.userid = comp.userid
+                                 WHERE usdata.referrerid = ?i", $referrerid);
+        $referrals = $referrals->fetch_assoc_array();
+
+        if (empty($referrals)) {
+            return [false, []];
+        }
+
+        //2. Форычом проверяем выполнили условия
+        // - невыполнивших заносим в массив
+        $noncompletenames = [];
+        $countcomplete = 0;
+        foreach ($referrals as $referral) {
+            if ($referral['conditionscomplete'] == 0) {
+                $noncompletenames[] = !empty($referral['username']) ? $referral['username'] : 0;
+            }
+            if ($referral['conditionscomplete'] == 1) {
+                $countcomplete ++;
+            }
+        }
+
+        //3. Если массив пустой, то все выполнил
+        $complete = ($countcomplete >= Constants::COUNT_SUBSCRIBERS);
+
+        return [$complete, $noncompletenames];
+    }
+
+    static function get_referrerid($db, $userid)
+    {
+        $referreid = $db->query("SELECT referrerid FROM ezcash_userdata WHERE userid = ?i", $userid);
+
+        return $referreid->fetch_assoc_array()[0]['referrerid'];
+    }
+
+    static function is_conditions_complete($db, $userid)
+    {
+        list($referralscomplete, $uncompletenames) = self::is_referrals_complete($db, $userid);
+
+        $countsubscriptions = $db->query('SELECT countsubscriptions FROM ' . Constants::COMP_TABLE . ' WHERE userid = ?i', $userid);
+        $countsubscriptions = $countsubscriptions->fetch_assoc_array()[0]['countsubscriptions'];
+
+        return ($referralscomplete && $countsubscriptions >= Constants::COUNT_SUBSCRIPTIONS);
+    }
 }

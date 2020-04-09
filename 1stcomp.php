@@ -99,7 +99,7 @@ if ($isstart) {
             'langcode' => $langcode,
             'timecreated' => time(),
             'refcode' => $refcode,
-            'referrerid' => !empty($referrer['id']) ? $referrer['id'] : 0
+            'referrerid' => !empty($referrer['userid']) ? $referrer['userid'] : 0
         ];
         $db->query('INSERT INTO ezcash_userdata SET ?A[?i, "?s", "?s", "?s", ?i, "?s", ?i]', $params);
     } else {
@@ -125,6 +125,7 @@ if ($isstart) {
             unset($ourchannelsurl[$key]);//убираем чтобы сообщение показать с неподписанными каналами
         }
     }
+    $params['countsubscriptions'] = $countsubscriptions;
 
     $allsubscribe = ($countsubscriptions == Constants::COUNT_SUBSCRIPTIONS); // На все ли каналы подписался
     $allinvite = ($comprecord['countsubscribers'] == Constants::COUNT_SUBSCRIBERS); // Пригласил ли необходимое количество человек
@@ -134,15 +135,17 @@ if ($isstart) {
     switch (true) {
         // Если всё сделал: формируем сообщение об успехе и обновляем данные в таблице
         case ($allsubscribe && $allinvite):
+            $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
             $message = Constants::SUCCESS_MESSAGE;
             $params['conditionscomplete'] = 1;
-            $params['countsubscriptions'] = $countsubscriptions;
-            $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
             break;
         // Если подписался, но не всех пригласил
         case ($allsubscribe && !$allinvite):
-            $message = '🙏🏻 Дай пять! Ты подписался на все каналы. Теперь тебе осталось пригласить ' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . ' братюнь.';
-            $params['countsubscriptions'] = $countsubscriptions;
+            $message = '🙏🏻 Дай пять! Ты подписался на все каналы.
+             
+👉🏼 Теперь тебе осталось пригласить ' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . ' друга.
+
+Реферральную ссылку ты можешь найти в условиях конкурса.';
             $keyboard = [["📃УСЛОВИЯ НЕДЕЛИ"], ["👍🏻ОТЗЫВЫ И РЕЗУЛЬТАТЫ"], ["📪ОБРАТНАЯ СВЯЗЬ"]];
             break;
         // Если всех пригласил, но не на всё подписался
@@ -161,7 +164,10 @@ if ($isstart) {
             }
             $links = implode("\n\n", $channelslinks);
             $params['countsubscriptions'] = $countsubscriptions;
-            $message = 'Тебе надо ещё пригласить ' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . " братюнь и подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
+            $message = 'Тебе надо ещё пригласить <b>' . (Constants::COUNT_SUBSCRIBERS - $comprecord['countsubscribers']) . "</b> друга и подписаться на: \n\n" . $links . "\n\n Как сделаешь, жми «Я ПОДПИСАЛСЯ» ещё разок.";
+            break;
+        default:
+            $message = 'Что-то пошло не так... Нажми "Обратная связь" и напиши нам. Во всём разберёмся.';
             break;
     }
 
@@ -226,7 +232,7 @@ if ($isstart) {
 
 //Если нет ника у пользователя, то надо ему об этом сказать
 if (empty($username)) {
-    $usernamemessage = 'У тебя не установлен НикНейм в Телеграмме. Зайди в настройки и установи его. Иначе ты не сможешь учавствовать в конкурсах.';
+    $usernamemessage = Constants::NONICKNAME_MESSAGE;
     $telegramApi->sendMessage($userid, $usernamemessage);
 }
 //}
