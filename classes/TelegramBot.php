@@ -1,9 +1,11 @@
 <?php
 
+include('classes/Constants.php');
+
 class TelegramBot
 {
 
-    protected $token = '443210917:AAEgqEA_MdIXxXWylu7EX4IEJLbUHo8inME';
+    protected $token = Constants::BOT_TOKEN_PROD;
 
     public function query($method, $params = [])
     {
@@ -21,19 +23,25 @@ class TelegramBot
 
         $client = new \GuzzleHttp\Client(['base_uri' => $url]);
 
-        $result = $client->request('GET');
+        try {
+            $result = $client->request('GET');
+        } catch (Exception $e) {
+            $result = false;
+        }
 
-        return json_decode($result->getBody());
+        return !empty($result) ? json_decode($result->getBody()) : false;
 
     }
 
-
-    public function sendMessage($chat_id, $text)
+    public function sendMessage($chat_id, $text, $reply_markup = '', $parsemode = '', $disablepreview = true)
     {
 
-        $this->query('sendMessage', [
+        return $this->query('sendMessage', [
             'text' => $text,
-            'chat_id' => $chat_id
+            'chat_id' => $chat_id,
+            'parse_mode' => $parsemode,
+            'reply_markup' => $reply_markup,
+            'disable_web_page_preview' => $disablepreview
         ]);
 
     }
@@ -44,5 +52,22 @@ class TelegramBot
         return $data;
     }
 
+    public function getChat($chatid) {
+        return $this->query('getChat', [
+            'chat_id' => $chatid,
+        ]);
+    }
+
+    public function replyKeyboardMarkup($keyboardarr, $resize_keyboard = true, $one_time_keyboard = false, $selective = false) {
+
+        $keyboardobject = (object) [
+            'keyboard' => $keyboardarr,
+            'resize_keyboard' => $resize_keyboard,
+            'one_time_keyboard' => $one_time_keyboard,
+            'selective' => $selective
+        ];
+
+        return json_encode($keyboardobject);
+    }
 
 }
